@@ -1,0 +1,14 @@
+{
+  "name": "angular-bootstrap-colorpicker",
+  "homepage": "https://github.com/buberdds/angular-bootstrap-colorpicker",
+  "version": "1.0.0",
+  "_release": "1.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.0",
+    "commit": "5e745a113b3f1df8400c6f4fdb2f7628411eb7f9"
+  },
+  "_source": "https://github.com/buberdds/angular-bootstrap-colorpicker.git",
+  "_target": "1.0",
+  "_originalSource": "angular-bootstrap-colorpicker"
+}
