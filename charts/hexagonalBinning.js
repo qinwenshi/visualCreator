@@ -9,18 +9,18 @@
 	var chart = raw.chart()
 		.title('Hexagonal Binning')
 		.description(
-			"Visually clusters the most populated areas on a scatterplot. Useful to make more readable a scatterplot when plotting hundreds of points.<br/>Based on <a href='http://bl.ocks.org/mbostock/4248145'>http://bl.ocks.org/mbostock/4248145</a>")
+			"Visually clusters the most populated areas on a scatterplot. Useful to make more readable a scatterplot when plotting hundreds of points.")
 		.thumbnail("imgs/binning.png")
 	    .category('Distributions')
 		.model(points)
 
 	var width = chart.number()
-		.title("Width")
+		.title("宽度")
 		.defaultValue(1000)
 		.fitToWidth(true)
 
 	var height = chart.number()
-		.title("Height")
+		.title("高度")
 		.defaultValue(500)
 
 	var radius = chart.number()
@@ -32,10 +32,10 @@
 		.defaultValue(false)
 
 	var colors = chart.color()
-		 .title("Color scale")
+		 .title("颜色分布")
 
 	var showPoints = chart.checkbox()
-		.title("show points")
+		.title("显示中心点")
 		.defaultValue(true)
 
 	chart.draw(function (selection, data){

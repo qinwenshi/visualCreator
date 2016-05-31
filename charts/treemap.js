@@ -5,7 +5,7 @@
 	var chart = raw.chart()
         .title('Treemap')
 		.description(
-            "A space filling visualization of data hierarchies and proportion between elements. The different hierarchical levels create visual clusters through the subdivision into rectangles proportionally to each element's value. Treemaps are useful to represent the different proportion of nested hierarchical data structures.<br/>Based on <a href='http://bl.ocks.org/mbostock/4063582'>http://bl.ocks.org/mbostock/4063582</a>")
+            "A space filling visualization of data hierarchies and proportion between elements. The different hierarchical levels create visual clusters through the subdivision into rectangles proportionally to each element's value. Treemaps are useful to represent the different proportion of nested hierarchical data structures.")
 		.thumbnail("imgs/treemap.png")
 	    .category('Hierarchies')
 		.model(tree)
@@ -16,7 +16,7 @@
 		.fitToWidth(true)
 	
 	var height = chart.number()
-		.title("Height")
+		.title("高度")
 		.defaultValue(500)
 
 	var padding = chart.number()
@@ -24,7 +24,7 @@
 		.defaultValue(5)
 
 	var colors = chart.color()
-		.title("Color scale")
+		.title("颜色分布")
 
 	chart.draw(function (selection, data){
 		

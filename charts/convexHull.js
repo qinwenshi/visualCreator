@@ -9,17 +9,17 @@
     var chart = raw.chart()
         .title('Convex Hull')
         .description(
-            "In mathematics, the <a href='https://en.wikipedia.org/wiki/Convex_hull'>convex hull</a> is the smallest convex shape containing a set o points. Applied to a scatterplot, it is useful to identify points belonging to the same category.<br /> <br/>Based on <a href='http://bl.ocks.org/mbostock/4341699'>http://bl.ocks.org/mbostock/4341699</a>")
+            "In mathematics, the <a href='https://en.wikipedia.org/wiki/Convex_hull'>convex hull</a> is the smallest convex shape containing a set o points. Applied to a scatterplot, it is useful to identify points belonging to the same category.<br /> ")
         .thumbnail("imgs/convexHull.png")
         .model(points)
 
     var width = chart.number()
-        .title("Width")
+        .title("宽度")
         .defaultValue(1000)
         .fitToWidth(true)
 
     var height = chart.number()
-        .title("Height")
+        .title("高度")
         .defaultValue(500)
 
     var stroke = chart.number()

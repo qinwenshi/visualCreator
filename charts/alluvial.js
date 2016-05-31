@@ -5,18 +5,18 @@
 	var chart = raw.chart()
 		.title('Alluvial Diagram')
 		.description(
-            "Alluvial diagrams allow to represent flows and to see correlations between categorical dimensions, visually linking to the number of elements sharing the same categories. It is useful to see the evolution of cluster (such as the number of people belonging to a specific group). It can also be used to represent bipartite graphs, using each node group as dimensions.<br/>Mainly based on our previous work with Fineo, it is inspired by <a href='http://bost.ocks.org/mike/sankey/'>http://bost.ocks.org/mike/sankey/</a>")
+            "Alluvial diagrams allow to represent flows and to see correlations between categorical dimensions, visually linking to the number of elements sharing the same categories. It is useful to see the evolution of cluster (such as the number of people belonging to a specific group). It can also be used to represent bipartite graphs, using each node group as dimensions.<br/>Mainly based on our previous work with Fineo.")
 		.thumbnail("imgs/alluvial.png")
 		.category("Correlations")
 		.model(graph)
 
 	var width = chart.number()
-		.title("Width")
+		.title("宽度")
 		.defaultValue(1000)
 		.fitToWidth(true)
 
 	var height = chart.number()
-		.title("Height")
+		.title("高度")
 		.defaultValue(500)
 
 	var nodeWidth = chart.number()
@@ -29,7 +29,7 @@
         .defaultValue('size')
 
 	var colors = chart.color()
-		.title("Color scale")
+		.title("颜色分布")
 
 	chart.draw(function (selection, data){
 

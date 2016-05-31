@@ -57,17 +57,17 @@
         .title('Streamgraph')
         .thumbnail("imgs/streamgraph.png")
         .description(
-            "For continuous data such as time series, a streamgraph can be used in place of stacked bars. <br/>Based on <a href='http://bl.ocks.org/mbostock/4060954'>http://bl.ocks.org/mbostock/4060954</a>")
+            "For continuous data such as time series, a streamgraph can be used in place of stacked bars. ")
         .category('Time Series')
         .model(stream)
 
     var width = chart.number()
-        .title("Width")
+        .title("宽度")
         .defaultValue(1000)
         .fitToWidth(true)
 
     var height = chart.number()
-        .title("Height")
+        .title("高度")
         .defaultValue(500)
 
     var offset = chart.list()
@@ -81,11 +81,11 @@
         .defaultValue('Sankey curves')
 
     var showLabels = chart.checkbox()
-        .title("show labels")
+        .title("显示标签")
         .defaultValue(true)
 
     var colors = chart.color()
-        .title("Color scale")
+        .title("颜色分布")
 
     chart.draw(function (selection, data){
 

@@ -8,25 +8,25 @@
 	var chart = raw.chart()
 		.title('Voronoi Tessellation')
 		.description(
-            "It creates the minimum area around each point defined by two variables. When applied to a scatterplot, it is useful to show the distance between points. <br/>Based on <a href='http://bl.ocks.org/mbostock/4060366'>http://bl.ocks.org/mbostock/4060366</a>")
+            "It creates the minimum area around each point defined by two variables. When applied to a scatterplot, it is useful to show the distance between points. ")
 		.thumbnail("imgs/voronoi.png")
 		.category('Distributions')
 		.model(points)
 
 	var width = chart.number()
-		.title("Width")
+		.title("宽度")
 		.defaultValue(1000)
 		.fitToWidth(true)
 
 	var height = chart.number()
-		.title("Height")
+		.title("高度")
 		.defaultValue(500)
 
 	var colors = chart.color()
-		.title("Color scale")
+		.title("颜色分布")
 
 	var showPoints = chart.checkbox()
-		.title("Show points")
+		.title("显示中心点")
 		.defaultValue(true)
 
 	chart.draw(function (selection, data){

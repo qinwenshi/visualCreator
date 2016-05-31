@@ -4,14 +4,14 @@
     var model = raw.model();
 
     var category = model.dimension()
-        .title("Category")
+        .title("所属类型")
         .required(1);
 
     var color = model.dimension()
-        .title("Color")
+        .title("颜色")
 
     var list = model.dimension()
-        .title('Dimensions')
+        .title('数值')
         .multiple(false)
         .types(Number)
         .required(1);
@@ -33,22 +33,22 @@
     var chart = raw.chart()
         .title('Labeled Pie Chart')
         .description(
-            "带标签饼图，用于对数据按照比例统计展示。为了展示效果，建议最多不超过15个分类。 <br/>基于 <a href='http://bl.ocks.org/marcbc/3281521'>http://bl.ocks.org/marcbc/3281521</a>")
+            "带标签饼图，用于对数据按照比例统计展示。为了展示效果，建议最多不超过15个分类。")
         .thumbnail("imgs/labeledPieChart.png")
         .category('Others')
         .model(model)
 
     var width = chart.number()
-        .title("Width")
+        .title("宽度")
         .defaultValue(1000)
         .fitToWidth(true)
 
     var height = chart.number()
-        .title("Height")
+        .title("高度")
         .defaultValue(500)
 
     var colors = chart.color()
-        .title("Color scale")
+        .title("颜色分布")
 
 
 chart.draw(function (selection, data){
@@ -85,7 +85,7 @@ chart.draw(function (selection, data){
   var pie = d3.layout.pie()
     .sort(null)
     .value(function(d) {
-      return d.dimensions.Amount;
+      return d.dimensions[Object.keys(d.dimensions)[0]];
     });
 
   var arc = d3.svg.arc()
@@ -197,8 +197,5 @@ chart.draw(function (selection, data){
       .remove();
     };
   
-
-
-
   })
 })();

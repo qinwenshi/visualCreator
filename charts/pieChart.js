@@ -33,22 +33,22 @@
     var chart = raw.chart()
         .title('Pie Chart')
         .description(
-            "饼图，用于对数据按照比例统计展示。为了展示效果，建议最多不超过15个分类。 <br/>基于 <a href='http://bl.ocks.org/marcbc/3281521'>http://bl.ocks.org/marcbc/3281521</a>")
+            "饼图，用于对数据按照比例统计展示。为了展示效果，建议最多不超过15个分类。 ")
         .thumbnail("imgs/pieChart.png")
         .category('Others')
         .model(model)
 
     var width = chart.number()
-        .title("Width")
+        .title("宽度")
         .defaultValue(1000)
         .fitToWidth(true)
 
     var height = chart.number()
-        .title("Height")
+        .title("高度")
         .defaultValue(500)
 
     var colors = chart.color()
-        .title("Color scale")
+        .title("颜色分布")
 
 
 chart.draw(function (selection, data){

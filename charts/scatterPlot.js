@@ -11,12 +11,12 @@
 		.model(points)
 
 	var width = chart.number()
-		.title("Width")
+		.title("宽度")
 		.defaultValue(1000)
 		.fitToWidth(true)
 
 	var height = chart.number()
-		.title("Height")
+		.title("高度")
 		.defaultValue(500)
 
 	var maxRadius = chart.number()
@@ -28,10 +28,10 @@
 		.defaultValue(false)
 
 	var colors = chart.color()
-		 .title("Color scale")
+		 .title("颜色分布")
 
 	var showPoints = chart.checkbox()
-		.title("show points")
+		.title("显示中心点")
 		.defaultValue(true)
 
 	chart.draw(function (selection, data){

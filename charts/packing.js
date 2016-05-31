@@ -5,7 +5,7 @@
 	var chart = raw.chart()
 		.title('Circle Packing')
 		.description(
-            "Nested circles allow to represent hierarchies and compare values. This visualization is particularly effective to show the proportion between elements through their areas and their position inside a hierarchical structure.<br/>Based on <a href='http://bl.ocks.org/mbostock/4063530'>http://bl.ocks.org/mbostock/4063530</a>")
+            "Nested circles allow to represent hierarchies and compare values. This visualization is particularly effective to show the proportion between elements through their areas and their position inside a hierarchical structure.")
 		.thumbnail("imgs/circlePacking.png")
         .category('Hierarchies')
         .model(tree)
@@ -24,10 +24,10 @@
         .defaultValue(false)
 
 	var colors = chart.color()
-        .title("Color scale")
+        .title("颜色分布")
 
 	var showLabels = chart.checkbox()   
-        .title("Show labels")
+        .title("显示标签")
 		.defaultValue(true)
 
 	chart.draw(function (selection, data){

@@ -9,18 +9,18 @@
     var chart = raw.chart()
         .title('Reingold–Tilford Tree')
         .description(
-            "The tree layout implements the Reingold-Tilford algorithm for efficient, tidy arrangement of layered nodes. The depth of nodes is computed by distance from the root, leading to a ragged appearance. <br/>Based on <a href='http://bl.ocks.org/mbostock/4339184'>http://bl.ocks.org/mbostock/4339184</a>")
+            "The tree layout implements the Reingold-Tilford algorithm for efficient, tidy arrangement of layered nodes. The depth of nodes is computed by distance from the root, leading to a ragged appearance. ")
         .thumbnail("imgs/reingoldTilford.png")
         .category('Hierarchies')
         .model(tree)
 
     var width = chart.number()
-        .title("Width")
+        .title("宽度")
         .defaultValue(1000)
         .fitToWidth(true)
 
     var height = chart.number()
-        .title("Height")
+        .title("高度")
         .defaultValue(500)
 
     chart.draw(function (selection, data){
