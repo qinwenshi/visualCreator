@@ -28,7 +28,7 @@
 		.defaultValue(20)
 
 	var useZero = chart.checkbox()
-		.title("set origin at (0,0)")
+		.title("设置原点为 (0,0)")
 		.defaultValue(false)
 
 	var colors = chart.color()
