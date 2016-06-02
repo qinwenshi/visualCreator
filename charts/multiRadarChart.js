@@ -3,19 +3,17 @@
  */
 (function () {
 
-    var color = d3.scale.ordinal()
-        .range(["#EDC951", "#CC333F", "#00A0B0"]);
-
     var model = raw.model();
-   /* var category = model.dimension()
-        .title("类型")
-        .types(String)
+
+    var label = model.dimension()
+        .title("名称")
         .required(1);
 
-    var value = model.dimension()
+    var list = model.dimension()
         .title("数值")
         .multiple(true)
-        .types(Number);*/
+        .types(Number)
+        .required(3);
 
     var chart = raw.chart()
         .title('Multi Radar Chart')
@@ -24,8 +22,6 @@
         .thumbnail("imgs/multiRadarChart.png")
         .category('Others')
         .model(model)
-
-    var margin = {top: 10, right: 10, bottom: 10, left: 10};
 
     var width = chart.number()
         .title("宽度")
@@ -40,6 +36,19 @@
     var colors = chart.color()
         .title("颜色分布");
 
+    model.map(function (data) {
+        if (!list()) return;
+        return data.map(function (d) {
+            var obj = {};
+            obj['name'] = label(d);
+            var properties = {};
+            list().forEach(function (l) {
+                properties[l] = d[l];
+            });
+            obj["properties"] = properties;
+            return obj;
+        })
+    })
 
     chart.draw(function (selection, data) {
         model.isValid(true);
@@ -52,29 +61,27 @@
         var maxValue = Number.MIN_SAFE_INTEGER;
         data.forEach(function (item, i) {
             var newSeries = [];
-            var obj = eval(item);
-            var flag = 0;
-            for (var p in obj) {
-                if (flag > 0) {
-                    if (parseFloat(obj[p]) > maxValue) {
-                        maxValue = parseFloat(obj[p]);
-                    }
-                    newSeries.push({"axis": p, "value": obj[p]});
-                }else {
-                    legendTitles.push(obj[p]);
+            legendTitles.push(item['name']);
+            var properties = eval(item['properties']);
+            for (var p in properties) {
+                if (parseFloat(properties[p]) > maxValue) {
+                    maxValue = parseFloat(properties[p]);
                 }
-                flag++;
+                newSeries.push({"axis": p, "value": properties[p]});
             }
 
             resultData.push(newSeries);
         });
-        console.log(resultData);
+        var levels = maxValue / 5 + 1;
+        if(levels <=0) {
+            levels = resultData.length;
+        }
         var radarChartOptions = {
             w: width() - 100,
             h: height() - 100,
             maxValue: maxValue,
-            levels: resultData.length,
-            color:colors()
+            levels: levels,
+            color: colors()
         };
         RadarChart.draw("#my-radar-chart", resultData, radarChartOptions);
 
@@ -86,7 +93,7 @@
 
         var colorscale = d3.scale.category10();
 
-//Create the title for the legend
+        //Create the title for the legend
         var text = svg.append("text")
             .attr("class", "title")
             .attr('transform', 'translate(90,0)')
@@ -94,9 +101,9 @@
             .attr("y", 10)
             .attr("font-size", "12px")
             .attr("fill", "#404040")
-            .text("personal ability in five dimensions");
+            .text("");
 
-//Initiate Legend
+        //Initiate Legend
         var legend = svg.append("g")
                 .attr("class", "legend")
                 .attr("height", 100)
@@ -109,10 +116,14 @@
             .enter()
             .append("rect")
             .attr("x", w - 65)
-            .attr("y", function(d, i){ return i * 20;})
+            .attr("y", function (d, i) {
+                return i * 20;
+            })
             .attr("width", 10)
             .attr("height", 10)
-            .style("fill", function(d, i){ return colorscale(i);})
+            .style("fill", function (d, i) {
+                return colorscale(i);
+            })
         ;
         //Create text next to squares
         legend.selectAll('text')
@@ -120,10 +131,14 @@
             .enter()
             .append("text")
             .attr("x", w - 52)
-            .attr("y", function(d, i){ return i * 20 + 9;})
+            .attr("y", function (d, i) {
+                return i * 20 + 9;
+            })
             .attr("font-size", "11px")
             .attr("fill", "#737373")
-            .text(function(d) { return d; })
+            .text(function (d) {
+                return d;
+            })
         ;
     });
 })();
