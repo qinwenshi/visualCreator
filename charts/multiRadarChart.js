@@ -33,6 +33,12 @@
         .defaultValue(600)
         .fitToWidth(true);
 
+
+    const defaultLevelInterval = 5;
+    var levelInterval = chart.number()
+        .title("刻度")
+        .defaultValue(defaultLevelInterval);
+
     var colors = chart.color()
         .title("颜色分布");
 
@@ -72,8 +78,8 @@
 
             resultData.push(newSeries);
         });
-        var levels = maxValue / 5 + 1;
-        if(levels <=0) {
+        var levels = maxValue / (levelInterval() <= 0 ? defaultLevelInterval : levelInterval()) + 1;
+        if (levels <= 0) {
             levels = resultData.length;
         }
         var radarChartOptions = {
