@@ -178,8 +178,7 @@ chart.draw(function (selection, data){
       .attr("stroke", "grey")
       .attr("stroke-width", "2px")
       .attr("fill", "none");
-  
-
+      
     polyline.transition().duration(1000)
       .attrTween("points", function(d){
         this._current = this._current || d;

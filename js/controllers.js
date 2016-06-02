@@ -12,7 +12,8 @@ angular.module('raw.controllers', [])
             {title: 'Music (flows)', url: 'data/flows.csv'},
             {title: 'Cocktails (correlations)', url: 'data/correlations.csv'},
             {title: "Personal Accounting(Pie)", url: 'data/multivariate_tt.csv'},
-            {title: "Multi Radar", url: 'data/multiRadar.csv'}
+            {title: "Multi Radar", url: 'data/multiRadar.csv'},
+            {title: "Basic BarChart", url: 'data/basicBarChartData.csv'}
         ]
 
         $scope.$watch('sample', function (sample) {

@@ -1084,3 +1084,27 @@ pre.CodeMirror-placeholder {
    background-repeat: no-repeat;
    opacity: .3;
 }
+
+/*basic barchart*/
+.basicbar {
+  fill: #aa0000;
+}
+
+.basicbar:hover {
+  fill: brown;
+}
+
+.axis {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
