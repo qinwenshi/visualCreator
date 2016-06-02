@@ -112,10 +112,10 @@ chart.draw(function (selection, data) {
         .attr("height", function (d) {
             return height() - y(d.dimension);
         })
-        .on('mousemove',function () {
+        .on('mousemove', function () {
             var e = window.event;
-            newX = e.offsetX;
-            newY = e.offsetY;
+            newX = e.offsetX - margin.left + 5;
+            newY = e.offsetY - margin.top + 5;
             tooltip
                 .attr('x', newX)
                 .attr('y', newY);
@@ -124,8 +124,8 @@ chart.draw(function (selection, data) {
             // newX = parseFloat(d3.select(this).attr('x'));
             // newY = parseFloat(d3.select(this).attr('y'));
             var e = window.event;
-            newX = e.offsetX;
-            newY = e.offsetY;
+            newX = e.offsetX - margin.left + 5;
+            newY = e.offsetY - margin.top + 5;
             tooltip
                 .attr('x', newX)
                 .attr('y', newY)
