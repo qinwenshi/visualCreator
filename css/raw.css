@@ -1087,10 +1087,10 @@ pre.CodeMirror-placeholder {
 
 /*basic barchart*/
 .basicbar {
-  fill: #aa0000;
+  fill: #ee0000;
 }
 
-.basicbar:hover {
+:hover {
   fill: brown;
 }
 
@@ -1107,4 +1107,11 @@ pre.CodeMirror-placeholder {
 
 .x.axis path {
   display: none;
+}
+
+/*single line chart*/
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
 }

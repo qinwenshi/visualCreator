@@ -13,7 +13,8 @@ angular.module('raw.controllers', [])
             {title: 'Cocktails (correlations)', url: 'data/correlations.csv'},
             {title: "Personal Accounting(Pie)", url: 'data/multivariate_tt.csv'},
             {title: "Multi Radar", url: 'data/multiRadar.csv'},
-            {title: "Basic BarChart", url: 'data/basicBarChartData.csv'}
+            {title: "Basic BarChart", url: 'data/basicBarChartData.csv'},
+            {title: "Single Line Chart", url: 'data/singleLineChartData.csv'}
         ]
 
         $scope.$watch('sample', function (sample) {
