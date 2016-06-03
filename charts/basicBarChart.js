@@ -130,7 +130,7 @@
                 tooltip
                     .attr('x', newX)
                     .attr('y', newY)
-                    .text(d.label + "(" + d.barValue + ")")
+                    .text(d.label + ":" + d.barValue)
                     .transition(200)
                     .style('opacity', 1);
             })
@@ -139,7 +139,9 @@
                     .transition(200)
                     .style('opacity', 0);
             });
-        var tooltip = svg.append('text')
+        var tooltip = svg
+            .append('text')
+            .attr('class', 'tips-text')
             .style('opacity', 0)
             .style('font-family', 'sans-serif')
             .style('font-size', '13px');

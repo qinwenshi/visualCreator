@@ -7,7 +7,7 @@
     var label = model.dimension()
         .title("时间")
         .multiple(false)
-        .types(Date)
+        .types(Date, Number)
         .required(1);
 
     var valueList = model.dimension()
@@ -34,7 +34,7 @@
         .defaultValue(600)
         .fitToWidth(true);
 
-    var formatDate = d3.time.format("%d-%b-%y");
+    var formatDate = d3.time.format("%Y%m%d");
 
     model.map(function (data) {
         if (!valueList()) return;
@@ -48,13 +48,15 @@
     });
 
     chart.draw(function (selection, data) {
-        var margin = {top: 20, right: 20, bottom: 30, left: 50}
+        var margin = {top: 20, right: 20, bottom: 30, left: 50},
+            w = width() - margin.left - margin.right,
+            h = height() - margin.top - margin.bottom;
 
         var x = d3.time.scale()
-            .range([0, width()]);
+            .range([0, w]);
 
         var y = d3.scale.linear()
-            .range([height(), 0]);
+            .range([h, 0]);
 
         var xAxis = d3.svg.axis()
             .scale(x)
@@ -73,11 +75,12 @@
             });
 
         var svg = selection
-            .attr("width", width() + margin.left + margin.right)
-            .attr("height", height() + margin.top + margin.bottom)
+            .attr("width", w + margin.left + margin.right)
+            .attr("height", h + margin.top + margin.bottom)
             .append("svg")
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
 
         x.domain(d3.extent(data, function (d) {
             return d.label;
@@ -88,7 +91,7 @@
 
         svg.append("g")
             .attr("class", "x axis")
-            .attr("transform", "translate(0," + height() + ")")
+            .attr("transform", "translate(0," + h + ")")
             .call(xAxis);
 
         svg.append("g")
@@ -105,6 +108,5 @@
             .datum(data)
             .attr("class", "line")
             .attr("d", line);
-
     });
 })();
