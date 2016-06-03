@@ -104,6 +104,31 @@
         svg = svg.append('g')
             .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
+        function selectByX(x) {
+            var date = new Date(xScale.invert(x)).getTime(), mouseoverSpeech;
+
+            speeches.forEach(function(speech) {
+                if (speech.date.getTime() <= date) {
+                    mouseoverSpeech = speech;
+                    return;
+                }
+            });
+
+            if (selectedSpeech !== mouseoverSpeech) {
+                selectedSpeech = mouseoverSpeech;
+                render();
+            }
+        }
+
+        var background = svg.append('rect')
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('width', width)
+            .attr('height', height)
+            .style('fill', '#fff')
+            .on('mouseout', function(e) { selectedSpeech = null; render(); })
+            .on('mousemove', function() { selectByX(d3.mouse(this)[0]) });
+
         var elPopup = chart.append('div')
             .attr('id', 'gia-sotu-popup');
 
