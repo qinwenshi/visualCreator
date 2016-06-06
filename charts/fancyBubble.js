@@ -22,6 +22,12 @@
         .types(Number)
         .required(1);
 
+    var nameValue = model.dimension()
+        .title("名称")
+        .multiple(false)
+        .types(String)
+        .required(1);
+
     var chart = raw.chart()
         .title('Fancy Bubble Chart')
         .description(
@@ -40,15 +46,28 @@
         .defaultValue(600)
         .fitToWidth(true);
 
-    /* var formatDate = d3.time.format("%Y%m%d");
+    var formatDate = d3.time.format("%Y%m%d");
 
-     model.map(function (data) {
-     if (!yValue()) return;
-     return data.map(function (d) {
+    model.map(function (data) {
+        if (!xValue() || !yValue() || !scaleValue() || !nameValue()) return;
+        return data.map(function (d) {
+            var obj = {};
 
-     return obj;
-     })
-     });*/
+            xValue().forEach(function (l) {
+                obj['date'] = d[l];
+            });
+            yValue().forEach(function (l) {
+                obj['rate'] = d[l];
+            });
+            scaleValue().forEach(function (l) {
+                obj['counts'] = d[l];
+            });
+            nameValue().forEach(function (l) {
+                obj['name'] = d[l];
+            });
+            return obj;
+        })
+    });
 
     chart.draw(function (selection, data) {
         var helpers = {
@@ -63,9 +82,9 @@
             maxBubbleRadius: 20,
             dateDomainPadding: 5, // years
             kincaidDomainPadding: .1,
-            xAxisLabel: "时间",
-            yAxisLabel: "随访率",
-            keyCircleLabel: "随访人数",
+            xAxisLabel: xValue()[0],
+            yAxisLabel: yValue()[0],
+            keyCircleLabel: scaleValue()[0],
             noneSelectedOpacity: .3,
             selectedOpacity: 1,
             unselectedOpacity: .07,
@@ -295,7 +314,7 @@
                 left += margin.left;
 
                 elPopup
-                    .html('<img width="100" height="100" src="' + portraitUrl(selectedSpeech.name) + '" alt="' + selectedSpeech.name + '"><h5>' + selectedSpeech.name + '</h5>')
+                    .html('<h4>' + selectedSpeech.name + '</h4><h5>' + scaleValue()[0] + ':' + selectedSpeech.counts + '</h5>')
                     .style('top', top + 'px')
                     .style('left', left + 'px')
                     .style('display', 'block');
@@ -310,32 +329,6 @@
             renderPoints();
             renderPopup();
         }
-
-        /*d3.json('data/fancyBubble.json', function (json) {
-         presidents = json;
-
-         presidents.forEach(function (president, i) {
-         president.id = i;
-         president.speeches.forEach(function (speech) {
-         speech.date = yyyymmdd.parse(speech.d);
-         });
-         });
-
-         speeches = [];
-
-         presidents.forEach(function (president) {
-         president.speeches.forEach(function (speech) {
-         speech.president = president;
-         speeches.push(speech);
-         });
-         });
-         // Presidents, assumed to load in speech order, so sorting unnecessary
-         // speeches.sort(function(a, b) { return d3.ascending(a.date, b.date) })
-
-         // Sort by least to most readable
-         presidents.sort(function (a, b) {
-         return d3.ascending(a.avg_kincaid, b.avg_kincaid)
-         });*/
 
         var extentX = d3.extent(data, function (d) {
             return yyyymmdd.parse(d.date);
