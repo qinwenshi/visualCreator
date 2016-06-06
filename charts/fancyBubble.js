@@ -4,22 +4,23 @@
 (function () {
     var model = raw.model();
 
-    var label = model.dimension()
-        .title("数值")
+    var xValue = model.dimension()
+        .title("数值(X)")
         .multiple(false)
         .types(Number)
         .required(1);
 
-    var valueList = model.dimension()
-        .title("数值")
+    var yValue = model.dimension()
+        .title("数值(Y)")
         .multiple(false)
         .types(Number)
         .required(1);
 
-    var bubbleSize = model.dimension()
-        .title("大小")
+    var scaleValue = model.dimension()
+        .title("圆圈大小")
         .multiple(false)
-        .types(Number);
+        .types(Number)
+        .required(1);
 
     var chart = raw.chart()
         .title('Fancy Bubble Chart')
@@ -42,10 +43,10 @@
     // var formatDate = d3.time.format("%Y%m%d");
 
     model.map(function (data) {
-        if (!valueList()) return;
+        if (!yValue()) return;
         return data.map(function (d) {
-            var obj = {'label': label(d)};
-            valueList().forEach(function (l) {
+            var obj = {'label': xValue(d)};
+            yValue().forEach(function (l) {
                 obj['value'] = d[l];
             });
             return obj;
@@ -53,6 +54,13 @@
     });
 
     chart.draw(function (selection, data) {
+        var helpers = {
+            addCommas: d3.format(','),
+            portraitUrl: portraitUrl,
+            portraitTag: portraitTag,
+            formatDate: formatDate,
+            formatKincaid: formatKincaid
+        };
 
         var CONFIG = {
             maxBubbleRadius: 20,
@@ -75,31 +83,12 @@
         var width = w() - margin.left - margin.right,
             height = h() - margin.top - margin.bottom;
 
-        /**
-         * select the parent of the selection
-         * because svg cannot container div or h1
-         */
-        var chartContainer = d3.select(selection[0][0].parentElement.nodeName)
-            .attr('width', width)
-            .attr('height', height)
-            .append('div');
-
-        var chart = chartContainer.append('div')
-            .attr('width', width + margin.left + margin.right)
-            .attr('height', height + margin.top + margin.bottom)
-            .attr('id', 'gia-sotu-chart');
+        var rootNode = d3.select("#chart");
 
         var svg = selection
             .attr('width', width + margin.left + margin.right)
             .attr('height', height + margin.top + margin.bottom)
             .append("g");
-
-        chart.append('h1')
-            .attr('id', 'gia-sotu-president-header')
-            .text(CONFIG.headingText);
-
-        chartContainer
-            .style('height', chart.node().offsetHeight + 'px');
 
         svg = svg.append('g')
             .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
@@ -107,7 +96,7 @@
         function selectByX(x) {
             var date = new Date(xScale.invert(x)).getTime(), mouseoverSpeech;
 
-            speeches.forEach(function(speech) {
+            speeches.forEach(function (speech) {
                 if (speech.date.getTime() <= date) {
                     mouseoverSpeech = speech;
                     return;
@@ -126,13 +115,16 @@
             .attr('width', width)
             .attr('height', height)
             .style('fill', '#fff')
-            .on('mouseout', function(e) { selectedSpeech = null; render(); })
-            .on('mousemove', function() { selectByX(d3.mouse(this)[0]) });
+            .on('mouseout', function (e) {
+                selectedSpeech = null;
+                render();
+            })
+            .on('mousemove', function () {
+                selectByX(d3.mouse(this)[0])
+            });
 
-        var elPopup = chart.append('div')
+        var elPopup = rootNode.append('div')
             .attr('id', 'gia-sotu-popup');
-
-        var popupTemplate = _.template(d3.select('#gia-sotu-popupTemplate').html());
 
         var yyyymmdd = d3.time.format('%Y-%m-%d');
         var formatDate = d3.time.format('%-d %B %Y');
@@ -144,16 +136,8 @@
         }
 
         function portraitTag(name) {
-            return '<img src="' + portraitUrl(name) + '" alt="' + name + '">';
+            return '<img width="150" height="150" src="' + portraitUrl(name) + '" alt="' + name + '">';
         }
-
-        var helpers = {
-            addCommas: d3.format(','),
-            portraitUrl: portraitUrl,
-            portraitTag: portraitTag,
-            formatDate: formatDate,
-            formatKincaid: formatKincaid
-        };
 
         var xScale = d3.time.scale()
             .range([0, width]);
@@ -250,9 +234,9 @@
                 .attr('fill', function (d) {
                     return colors(d.president.name)
                 })
-                // .attr('stroke', function(d) { return d.oral ? '#999' : '#966' })
+                .attr('stroke', function(d) { return d.oral ? '#999' : '#966' })
                 .attr('stroke', 'rgba(0,0,0, .05)')
-                // .attr('stroke-dasharray', function(d) { return d.oral ? '1, 1' : '1' })
+                .attr('stroke-dasharray', function(d) { return d.oral ? '1, 1' : '1' })
                 .on('mouseover', function (d) {
                     selectedSpeech = d;
                     render();
@@ -314,7 +298,7 @@
                 left += margin.left;
 
                 elPopup
-                    .html(popupTemplate({speech: selectedSpeech, helpers: helpers}))
+                    .html('<img width="100" height="100" src="' + portraitUrl(selectedSpeech.president.name) + '" alt="' + selectedSpeech.president.name + '"><h5>'+selectedSpeech.president.name+'</h5>')
                     .style('top', top + 'px')
                     .style('left', left + 'px')
                     .style('display', 'block');
@@ -328,27 +312,6 @@
 
             renderPoints();
             renderPopup();
-        }
-
-        function setChartPosition() {
-            var giaTop = selection.node().offsetTop;
-            var giaHeight = selection.node().offsetHeight;
-            var chartHeight = chartContainer.node().offsetHeight;
-
-            if (giaTop > window.pageYOffset) {
-                chart.style('position', 'absolute');
-                chart.style('top', 0);
-                return;
-            }
-
-            if (giaTop <= window.pageYOffset && window.pageYOffset < giaTop + giaHeight - chartHeight) {
-                chart.style('position', 'fixed');
-                chart.style('top', 0);
-                return;
-            }
-
-            chart.style('position', 'absolute');
-            chart.style('top', (giaHeight - chartHeight) + 'px');
         }
 
         d3.json('data/fancyBubble.json', function (json) {
@@ -402,8 +365,6 @@
             renderAxis();
             render();
 
-            window.onscroll = setChartPosition;
-            setChartPosition();
         });
 
         function scaleKeyCircle() {
