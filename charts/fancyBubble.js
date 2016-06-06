@@ -5,7 +5,7 @@
     var model = raw.model();
 
     var xValue = model.dimension()
-        .title("数值(X)")
+        .title("时间/数值(X)")
         .multiple(false)
         .types(Number, Date)
         .required(1);
@@ -25,7 +25,7 @@
     var nameValue = model.dimension()
         .title("名称")
         .multiple(false)
-        .types(String)
+        .types(String, Number)
         .required(1);
 
     var chart = raw.chart()
@@ -54,7 +54,7 @@
             var obj = {};
 
             xValue().forEach(function (l) {
-                obj['date'] = d[l];
+                obj['date'] = formatDate.parse(d[l]);
             });
             yValue().forEach(function (l) {
                 obj['rate'] = d[l];
@@ -70,13 +70,6 @@
     });
 
     chart.draw(function (selection, data) {
-        var helpers = {
-            addCommas: d3.format(','),
-            portraitUrl: portraitUrl,
-            portraitTag: portraitTag,
-            formatDate: formatDate,
-            formatKincaid: formatKincaid
-        };
 
         var CONFIG = {
             maxBubbleRadius: 20,
@@ -92,7 +85,7 @@
             headingText: 'Presidents in order of reading level'
         };
 
-        var presidents, selectedSpeech, points;
+        var selectedSpeech, points;
         var speeches = [];
 
 
@@ -106,16 +99,14 @@
         var svg = selection
             .attr('width', width + margin.left + margin.right)
             .attr('height', height + margin.top + margin.bottom)
-            .append("g");
-
-        svg = svg.append('g')
+            .append("g")
             .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
         function selectByX(x) {
             var date = new Date(xScale.invert(x)).getTime(), mouseoverSpeech;
 
             data.forEach(function (speech) {
-                if (yyyymmdd.parse(speech.date).getTime() <= date) {
+                if (speech.date.getTime() <= date) {
                     mouseoverSpeech = speech;
                     return;
                 }
@@ -141,20 +132,15 @@
                 selectByX(d3.mouse(this)[0])
             });
 
-        var elPopup = rootNode.append('div')
-            .attr('id', 'gia-sotu-popup');
+        var tmp = document.getElementById("gia-sotu-popup");
 
-        var yyyymmdd = d3.time.format('%Y%m%d');
-        var formatDate = d3.time.format('%-d %B %Y');
-
-        var formatKincaid = d3.format('.1f');
-
-        function portraitUrl(name) {
-            return 'http://img05.tooopen.com/images/20150531/tooopen_sy_127457023651.jpg';
-        }
-
-        function portraitTag(name) {
-            return '<img width="150" height="150" src="' + portraitUrl(name) + '" alt="' + name + '">';
+        var elPopup;
+        if (tmp === undefined || tmp === null) {
+            elPopup = rootNode.append('div')
+                .attr('id', 'gia-sotu-popup')
+                .style('display', 'none');
+        } else {
+            elPopup = rootNode.select("#gia-sotu-popup");
         }
 
         var xScale = d3.time.scale()
@@ -241,7 +227,7 @@
                 .append('circle')
                 .attr('class', 'speech')
                 .attr('cx', function (d) {
-                    return xScale(yyyymmdd.parse(d.date))
+                    return xScale(d.date)
                 })
                 .attr('cy', function (d) {
                     return yScale(d.rate)
@@ -282,7 +268,6 @@
                 var cx = Math.round(selectedPoint.attr('cx'));
                 var cy = Math.round(selectedPoint.attr('cy'));
                 var flip = cx < width / 2;
-                var left = cx;
 
                 popupConnectors
                     .style('display', 'block');
@@ -305,13 +290,15 @@
 
                 var leftPadding = Math.round(wordCountScale(selectedSpeech.counts)) + 26;
 
+                var left = cx + (flip ? 80 : -80) + margin.left;
+
                 if (flip) {
                     left += leftPadding;
+                    // left += Math.round(elPopup.style('width').split("px")[0]) / 2;
                 } else {
-                    left -= parseInt(elPopup.style('width'));
-                    left -= leftPadding - 40;
+                    // left -= Math.round(elPopup.style('width').split("px")[0]);
+                    // left -= (margin.left + leftPadding);
                 }
-                left += margin.left;
 
                 elPopup
                     .html('<h4>' + selectedSpeech.name + '</h4><h5>' + scaleValue()[0] + ':' + selectedSpeech.counts + '</h5>')
@@ -331,7 +318,7 @@
         }
 
         var extentX = d3.extent(data, function (d) {
-            return yyyymmdd.parse(d.date);
+            return d.date;
         });
         var extentY = d3.extent(data, function (d) {
             return d.rate
@@ -354,8 +341,6 @@
 
         renderAxis();
         render();
-
-        // });
 
         function scaleKeyCircle() {
             var scale,
