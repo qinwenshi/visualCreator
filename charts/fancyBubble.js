@@ -7,7 +7,7 @@
     var xValue = model.dimension()
         .title("数值(X)")
         .multiple(false)
-        .types(Number)
+        .types(Number, Date)
         .required(1);
 
     var yValue = model.dimension()
@@ -40,18 +40,15 @@
         .defaultValue(600)
         .fitToWidth(true);
 
-    // var formatDate = d3.time.format("%Y%m%d");
+    /* var formatDate = d3.time.format("%Y%m%d");
 
-    model.map(function (data) {
-        if (!yValue()) return;
-        return data.map(function (d) {
-            var obj = {'label': xValue(d)};
-            yValue().forEach(function (l) {
-                obj['value'] = d[l];
-            });
-            return obj;
-        })
-    });
+     model.map(function (data) {
+     if (!yValue()) return;
+     return data.map(function (d) {
+
+     return obj;
+     })
+     });*/
 
     chart.draw(function (selection, data) {
         var helpers = {
@@ -66,9 +63,9 @@
             maxBubbleRadius: 20,
             dateDomainPadding: 5, // years
             kincaidDomainPadding: .1,
-            xAxisLabel: 'Year of address',
-            yAxisLabel: 'Flesch incaid Reading Level',
-            keyCircleLabel: 'Number of words',
+            xAxisLabel: "时间",
+            yAxisLabel: "随访率",
+            keyCircleLabel: "随访人数",
             noneSelectedOpacity: .3,
             selectedOpacity: 1,
             unselectedOpacity: .07,
@@ -76,7 +73,9 @@
             headingText: 'Presidents in order of reading level'
         };
 
-        var presidents, speeches, selectedSpeech, points;
+        var presidents, selectedSpeech, points;
+        var speeches = [];
+
 
         var margin = {top: 10, right: 10, bottom: 50, left: 50};
 
@@ -96,8 +95,8 @@
         function selectByX(x) {
             var date = new Date(xScale.invert(x)).getTime(), mouseoverSpeech;
 
-            speeches.forEach(function (speech) {
-                if (speech.date.getTime() <= date) {
+            data.forEach(function (speech) {
+                if (yyyymmdd.parse(speech.date).getTime() <= date) {
                     mouseoverSpeech = speech;
                     return;
                 }
@@ -126,7 +125,7 @@
         var elPopup = rootNode.append('div')
             .attr('id', 'gia-sotu-popup');
 
-        var yyyymmdd = d3.time.format('%Y-%m-%d');
+        var yyyymmdd = d3.time.format('%Y%m%d');
         var formatDate = d3.time.format('%-d %B %Y');
 
         var formatKincaid = d3.format('.1f');
@@ -217,26 +216,24 @@
             var g = svg.select('g.speeches');
 
             points = g.selectAll('circle.speech')
-                .data(speeches);
+                .data(data);
 
             points.enter()
                 .append('circle')
                 .attr('class', 'speech')
                 .attr('cx', function (d) {
-                    return xScale(d.date)
+                    return xScale(yyyymmdd.parse(d.date))
                 })
                 .attr('cy', function (d) {
-                    return yScale(d.kincaid)
+                    return yScale(d.rate)
                 })
                 .attr('r', function (d) {
-                    return wordCountScale(d.wc)
+                    return wordCountScale(d.counts)
                 })
                 .attr('fill', function (d) {
-                    return colors(d.president.name)
+                    return colors(d.name)
                 })
-                .attr('stroke', function(d) { return d.oral ? '#999' : '#966' })
                 .attr('stroke', 'rgba(0,0,0, .05)')
-                .attr('stroke-dasharray', function(d) { return d.oral ? '1, 1' : '1' })
                 .on('mouseover', function (d) {
                     selectedSpeech = d;
                     render();
@@ -287,7 +284,7 @@
                     .attr('y1', top + 35)
                     .attr('y2', top + 35);
 
-                var leftPadding = Math.round(wordCountScale(selectedSpeech.wc)) + 26;
+                var leftPadding = Math.round(wordCountScale(selectedSpeech.counts)) + 26;
 
                 if (flip) {
                     left += leftPadding;
@@ -298,7 +295,7 @@
                 left += margin.left;
 
                 elPopup
-                    .html('<img width="100" height="100" src="' + portraitUrl(selectedSpeech.president.name) + '" alt="' + selectedSpeech.president.name + '"><h5>'+selectedSpeech.president.name+'</h5>')
+                    .html('<img width="100" height="100" src="' + portraitUrl(selectedSpeech.name) + '" alt="' + selectedSpeech.name + '"><h5>' + selectedSpeech.name + '</h5>')
                     .style('top', top + 'px')
                     .style('left', left + 'px')
                     .style('display', 'block');
@@ -314,58 +311,58 @@
             renderPopup();
         }
 
-        d3.json('data/fancyBubble.json', function (json) {
-            presidents = json;
+        /*d3.json('data/fancyBubble.json', function (json) {
+         presidents = json;
 
-            presidents.forEach(function (president, i) {
-                president.id = i;
-                president.speeches.forEach(function (speech) {
-                    speech.date = yyyymmdd.parse(speech.d);
-                });
-            });
+         presidents.forEach(function (president, i) {
+         president.id = i;
+         president.speeches.forEach(function (speech) {
+         speech.date = yyyymmdd.parse(speech.d);
+         });
+         });
 
-            speeches = [];
+         speeches = [];
 
-            presidents.forEach(function (president) {
-                president.speeches.forEach(function (speech) {
-                    speech.president = president;
-                    speeches.push(speech);
-                });
-            });
-            // Presidents, assumed to load in speech order, so sorting unnecessary
-            // speeches.sort(function(a, b) { return d3.ascending(a.date, b.date) })
+         presidents.forEach(function (president) {
+         president.speeches.forEach(function (speech) {
+         speech.president = president;
+         speeches.push(speech);
+         });
+         });
+         // Presidents, assumed to load in speech order, so sorting unnecessary
+         // speeches.sort(function(a, b) { return d3.ascending(a.date, b.date) })
 
-            // Sort by least to most readable
-            presidents.sort(function (a, b) {
-                return d3.ascending(a.avg_kincaid, b.avg_kincaid)
-            });
+         // Sort by least to most readable
+         presidents.sort(function (a, b) {
+         return d3.ascending(a.avg_kincaid, b.avg_kincaid)
+         });*/
 
-            var extentX = d3.extent(speeches, function (d) {
-                return d.date
-            });
-            var extentY = d3.extent(speeches, function (d) {
-                return d.kincaid
-            });
-            var maxWordCount = d3.max(speeches, function (d) {
-                return d.wc
-            });
-
-            // // pad the domain of the dates, is there a better way to do this?
-            var startDate = new Date(extentX[0].getTime()).setFullYear(extentX[0].getFullYear() - CONFIG.dateDomainPadding);
-            var endDate = new Date(extentX[1].getTime()).setFullYear(extentX[1].getFullYear() + CONFIG.dateDomainPadding);
-
-            // // pad the domain of the kincaid, is there a better way to do this?
-            extentY[0] *= (1 - CONFIG.kincaidDomainPadding);
-            extentY[1] *= (1 + CONFIG.kincaidDomainPadding);
-
-            xScale.domain([startDate, endDate]);
-            yScale.domain(extentY);
-            wordCountScale.domain([0, maxWordCount]);
-
-            renderAxis();
-            render();
-
+        var extentX = d3.extent(data, function (d) {
+            return yyyymmdd.parse(d.date);
         });
+        var extentY = d3.extent(data, function (d) {
+            return d.rate
+        });
+        var maxWordCount = d3.max(data, function (d) {
+            return d.counts
+        });
+
+        // // pad the domain of the dates, is there a better way to do this?
+        var startDate = new Date(extentX[0].getTime()).setFullYear(extentX[0].getFullYear() - CONFIG.dateDomainPadding);
+        var endDate = new Date(extentX[1].getTime()).setFullYear(extentX[1].getFullYear() + CONFIG.dateDomainPadding);
+
+        // // pad the domain of the kincaid, is there a better way to do this?
+        extentY[0] *= (1 - CONFIG.kincaidDomainPadding);
+        extentY[1] *= (1 + CONFIG.kincaidDomainPadding);
+
+        xScale.domain([startDate, endDate]);
+        yScale.domain(extentY);
+        wordCountScale.domain([0, maxWordCount]);
+
+        renderAxis();
+        render();
+
+        // });
 
         function scaleKeyCircle() {
             var scale,
