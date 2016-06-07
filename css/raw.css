@@ -1084,34 +1084,3 @@ pre.CodeMirror-placeholder {
    background-repeat: no-repeat;
    opacity: .3;
 }
-
-/*basic barchart*/
-.basicbar {
-  fill: #ee0000;
-}
-
-:hover {
-  fill: brown;
-}
-
-.axis {
-  font: 10px sans-serif;
-}
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.x.axis path {
-  display: none;
-}
-
-/*single line chart*/
-.line {
-  fill: none;
-  stroke: steelblue;
-  stroke-width: 1.5px;
-}

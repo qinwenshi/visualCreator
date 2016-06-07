@@ -290,7 +290,7 @@
 
                 var leftPadding = Math.round(wordCountScale(selectedSpeech.counts)) + 26;
 
-                var left = cx + (flip ? 80 : -80) + margin.left;
+                var left = cx + (flip ? 40 : -40) + margin.left;
 
                 if (flip) {
                     left += leftPadding;

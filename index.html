@@ -21,6 +21,9 @@
     <link rel="stylesheet" type="text/css" href="bower_components/codemirror/lib/codemirror.css">
     <link rel="stylesheet" type="text/css" href="css/fancybubble.css">
     <link rel="stylesheet" href="css/raw.css"/>
+    <link rel="stylesheet" href="css/aster.css"/>
+    <link rel="stylesheet" href="css/singleline.css"/>
+    <link rel="stylesheet" href="css/basicbar.css"/>
     <link rel="icon" href="favicon.ico?v=2" type="image/x-icon">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
@@ -82,6 +85,7 @@
 <!--Radar-->
 <script type="text/javascript" src="lib/RadarChart.js"></script>
 <script src="lib/underscore-min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 
 <!-- charts -->
 <script src="charts/treemap.js"></script>
@@ -106,6 +110,7 @@
 <script src="charts/basicBarChart.js"></script>
 <script src="charts/singleLineChart.js"></script>
 <script src="charts/fancyBubble.js"></script>
+<script src="charts/asterPlotChart.js"></script>
 
 
 <!-- angular -->
@@ -123,28 +128,5 @@
 <script src="js/controllers.js"></script>
 <script src="js/filters.js"></script>
 <script src="js/directives.js"></script>
-
-<!-- google analytics -->
-<script src="js/analytics.js"></script>
-<!--<script type="text/underscore" id="gia-sotu-popupTemplate">
-	<div id="gia-sotu-popup-portrait">
-		<%= helpers.portraitTag(speech.president.name) %>
-	</div>
-
-	<h3><%= speech.president.name %></h3>
-
-	<div class="gia-sotu-popup-date">
-		<%= helpers.formatDate(speech.date) %>
-		-
-		<%= helpers.addCommas(speech.wc) %> words
-	</div>
-
-	<div class="gia-sotu-popup-kincaid">
-		<%= helpers.formatKincaid(speech.kincaid) %>
-		<div class="gia-sotu-popup-kincaid-text">
-		Average education level
-		</div>
-	</div>
-</script>-->
 </body>
 </html>
