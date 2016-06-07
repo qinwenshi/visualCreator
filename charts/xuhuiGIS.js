@@ -132,7 +132,6 @@
 
                 for (var i in countries) {
                     feature = countries[i];
-                    console.log(feature.id);
                     coordinates = feature.geometry.coordinates[0]
                     for (var j in coordinates) {
                         coordinate = coordinates[j];
