@@ -16,6 +16,9 @@
         .types(Number)
         .required(1);
 
+    /**
+     * 圆圈大小
+     */
     var scaleValue = model.dimension()
         .title("圆圈大小")
         .multiple(false)
@@ -30,8 +33,7 @@
 
     var chart = raw.chart()
         .title('Fancy Bubble Chart')
-        .description(
-            "花式气泡图")
+        .description("花式气泡图")
         .thumbnail("imgs/fancyBubble.png")
         .category('Others')
         .model(model)
@@ -134,6 +136,9 @@
 
         var tmp = document.getElementById("gia-sotu-popup");
 
+        /**
+         * 弹出的窗口
+         */
         var elPopup;
         if (tmp === undefined || tmp === null) {
             elPopup = rootNode.append('div')
@@ -217,6 +222,9 @@
                 .call(keyCircle);
         }
 
+        /**
+         * 绘制圆圈
+         */
         function renderPoints() {
             var g = svg.select('g.speeches');
 
@@ -257,6 +265,9 @@
                 });
         }
 
+        /**
+         * 绘制弹出View
+         */
         function renderPopup() {
             if (selectedSpeech) {
                 var g = svg.select('g.speeches');

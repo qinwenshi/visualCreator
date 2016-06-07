@@ -10,12 +10,20 @@
         .types(String,Number)
         .required(1);
 
+    /**
+     * 对应于角度
+     * @type {*|{require, link}}
+     */
     var weight = model.dimension()
         .title("占比")
         .multiple(false)
         .types(Number)
         .required(1);
 
+    /**
+     * 对应于扇形的半径
+     * @type {*|{require, link}}
+     */
     var value = model.dimension()
         .title("值")
         .multiple(false)
@@ -42,6 +50,10 @@
     var colors = chart.color()
         .title("颜色");
 
+    /**
+     * 保存最大值,用于后面计算每个扇形的长度
+     * 最大的为整个圆的半径
+     */
     var maxValue = Number.MIN_SAFE_INTEGER;
     model.map(function (data) {
         if (!label() || !value() || !weight()) {
@@ -58,6 +70,9 @@
             });
             value().forEach(function (l) {
                 obj.value = Math.round(d[l]);
+                /**
+                 * 计算最大值
+                 */
                 if (obj.value > maxValue) {
                     maxValue = obj.value;
                 }

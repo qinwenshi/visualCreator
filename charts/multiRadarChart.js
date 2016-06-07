@@ -17,8 +17,7 @@
 
     var chart = raw.chart()
         .title('Multi Radar Chart')
-        .description(
-            "多层雷达图")
+        .description("多层雷达图")
         .thumbnail("imgs/multiRadarChart.png")
         .category('Others')
         .model(model)
@@ -32,9 +31,8 @@
         .title("高度")
         .defaultValue(600)
         .fitToWidth(true);
-
-
-    const defaultLevelInterval = 5;
+    
+    var defaultLevelInterval = 5;
     var levelInterval = chart.number()
         .title("刻度")
         .defaultValue(defaultLevelInterval);
