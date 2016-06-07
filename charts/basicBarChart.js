@@ -124,6 +124,6 @@
             .on('mouseover', tip.show)
             .on('mousemove', tip.show)
             .on('mouseout', tip.hide);
-        
+
     });
 })();
