@@ -15,8 +15,14 @@ angular.module('raw.controllers', [])
             {title: "Multi Radar", url: 'data/multiRadar.csv'},
             {title: "Basic BarChart", url: 'data/basicBarChartData.csv'},
             {title: "Single Line Chart", url: 'data/singleLineChartData.csv'},
+<<<<<<< HEAD
             {title: "GIS", url: 'data/XuhuiStreetData.csv'}
         ]
+=======
+            {title: "Fancy Bubble Chart", url: 'data/fancyBubble.csv'},
+            {title: "Aster Plot Chart", url: 'data/asterData.csv'}
+        ];
+>>>>>>> deb77acb2c87bdfb92e26836bdfa6e5fcdafb2a0
 
         $scope.$watch('sample', function (sample) {
             if (!sample) return;
