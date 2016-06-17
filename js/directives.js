@@ -14,7 +14,7 @@ angular.module('raw.directives', [])
 	        	$('*[data-toggle="tooltip"]').tooltip({ container:'body' });
 
 	        	d3.select(element[0]).select("*").remove();
-
+	        	d3.select(angular.element('#'+scope.target)[0]).select("*").remove();
 	        	if (!scope.chart || !scope.data.length) return;
 						if (!scope.model.isValid()) return;
 
@@ -23,13 +23,17 @@ angular.module('raw.directives', [])
 	        		.datum(scope.data)
 	        		.call(scope.chart)
 
-	    			scope.svgCode = d3.select(element[0])
+	        	d3.select(angular.element('#'+scope.target)[0])
+	        		.append("svg")
+	        		.datum(scope.data)
+	        		.call(scope.chart)
+
+	    		scope.svgCode = d3.select(element[0])
 	        			.select('svg')
 	    				.attr("xmlns", "http://www.w3.org/2000/svg")
 	    				.node().parentNode.innerHTML;
 	    			
-	    			$rootScope.$broadcast("completeGraph");
-
+	    		$rootScope.$broadcast("completeGraph");
 	        }
 
 	        scope.delayUpdate = dataService.debounce(update, 300, false);

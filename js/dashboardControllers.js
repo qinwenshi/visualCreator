@@ -165,5 +165,30 @@ angular.module('raw.controllers', [])
 
         $(document).ready(refreshScroll);
 
-        
+        $(document).ready(prepareDashboard);
+
+        function prepareDashboard(){
+
+            var dialog = $( ".wrap" ).zIndex(9999)
+            .dialog({
+                  title: "设置图表",
+                  autoOpen: false,
+                  height: 900,
+                  width: 1250,
+                  modal: true,
+                  buttons: {
+                    Cancel: function() {
+                      dialog.dialog( "close" );
+                    }
+                  },
+                  close: function() {
+                    
+                  }
+            });
+
+            $("[data-action]").on('click', function () {
+                $scope.target = $(this).data('target');
+                dialog.dialog( "open" );
+            });
+        }
     })

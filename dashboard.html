@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="raw">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AdminLTE 2 | Dashboard</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- jvectormap -->
+    <!--     <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    -->    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+    folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+    <script>
+    document.write('<base href="' + document.location + '" />');
+    </script>
+    <link rel="stylesheet"
+      href="http://fonts.googleapis.com/css?family=Karla:400,400italic,700,700italic|Lato:400,700,900|Open+Sans:400,300,600,700,800|Roboto+Slab:400,300,100,700|Roboto:400,100,300,500,700,900&subset=latin,latin-ext"/>
+      <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+      <link rel="stylesheet" type="text/css" href="bower_components/angular-bootstrap-colorpicker/css/colorpicker.css">
+      <link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="bower_components/codemirror/lib/codemirror.css">
+      <link rel="stylesheet" type="text/css" href="bower_components/jquery-ui/themes/base/jquery-ui.css">
+      <link rel="stylesheet" type="text/css" href="css/fancybubble.css">
+      <link rel="stylesheet" href="css/raw.css"/>
+      <link rel="stylesheet" href="css/aster.css"/>
+      <link rel="stylesheet" href="css/singleline.css"/>
+      <link rel="stylesheet" href="css/basicbar.css"/>
+      <link rel="icon" href="favicon.ico?v=2" type="image/x-icon">
+      <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+      <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    </head>
+    <body data-spy="scroll" class="hold-transition skin-blue sidebar-mini sidebar-collapse">
+      <div class="wrapper">
+        <header class="main-header">
+          <!-- Logo -->
+          <a href="index3.html" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>X</b>D</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><b>X</b>DATA</span>
+          </a>
+        </header>
+        
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+          <!-- Content Header (Page header) -->
+          <section class="content-header">
+            <h1>
+            Dashboard
+            <small>Version 2.0</small>
+            </h1>
+            <ol class="breadcrumb">
+              <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+              <li class="active">Dashboard</li>
+            </ol>
+          </section>
+          <!-- Main content -->
+          <section class="content">
+            <!-- Info boxes -->
+            <!-- Main row -->
+            <div class="row">
+              <!-- Left col -->
+              <div class="col-md-8">
+                <!-- MAP & BOX PANE -->
+                <div class="box box-success">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Visitors Report</h3>
+                    <div class="box-tools pull-right">
+                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                      </button>
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-wrench"></i></button>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Action</a></li>
+                          <li><a href="#" data-action="leaflet" data-target='world-map-markers'>配置图表</a></li>
+                          <li><a href="#">Something else here</a></li>
+                          <li class="divider"></li>
+                          <li><a href="#">Separated link</a></li>
+                        </ul>
+                      </div>
+                      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body no-padding">
+                    <div class="row">
+                      <div class="col-md-12 col-sm-12">
+                        <div class="pad">
+                          <!-- Map will be created here -->
+                          <div id="world-map-markers" style="height: 325px;"></div>
+                        </div>
+                      </div>
+                      <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                  </div>
+                  <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+                <div class="row">
+                  <div class="col-md-6">
+                    <!-- DIRECT CHAT -->
+                    <div class="box box-warning direct-chat direct-chat-warning">
+                      <div class="box-header with-border">
+                        <h3 class="box-title">Direct Chat</h3>
+                        <div class="box-tools pull-right">
+                          <span data-toggle="tooltip" title="3 New Messages" class="badge bg-yellow">3</span>
+                          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                          </button>
+                          <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Contacts" data-widget="chat-pane-toggle">
+                          <i class="fa fa-comments"></i></button>
+                          <div class="btn-group">
+                            <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-wrench"></i></button>
+                            <ul class="dropdown-menu" role="menu">
+                              <li><a href="#">Action</a></li>
+                              <li><a href="#" data-action="leaflet" data-target='chartContainer'>配置图表</a></li>
+                              <li><a href="#">Something else here</a></li>
+                              <li class="divider"></li>
+                              <li><a href="#">Separated link</a></li>
+                            </ul>
+                          </div>
+                          <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <!-- /.box-header -->
+                      <div class="box-body">
+                        <!-- Conversations are loaded here -->
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6">
+                            <div class="pad">
+                              <!-- Map will be created here -->
+                              <div id="chartContainer" style="height: 325px;"></div>
+                            </div>
+                          </div>
+                          <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                        
+                      </div>
+                      <!-- /.box-body -->
+                      <div class="box-footer">
+                        
+                      </div>
+                      <!-- /.box-footer-->
+                    </div>
+                    <!--/.direct-chat -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-6">
+                    <!-- USERS LIST -->
+                    <div class="box box-danger">
+                      <div class="box-header with-border">
+                        <h3 class="box-title">Latest Members</h3>
+                        <div class="box-tools pull-right">
+                          <span class="label label-danger">8 New Members</span>
+                          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                          </button>
+                          <div class="btn-group">
+                            <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-wrench"></i></button>
+                            <ul class="dropdown-menu" role="menu">
+                              <li><a href="#">Action</a></li>
+                              <li><a href="#" data-action="leaflet" data-target='membersChartContainer'>配置图表</a></li>
+                              <li><a href="#">Something else here</a></li>
+                              <li class="divider"></li>
+                              <li><a href="#">Separated link</a></li>
+                            </ul>
+                          </div>
+                          <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <!-- /.box-header -->
+                      <div class="box-body no-padding">
+                        <!-- Conversations are loaded here -->
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6">
+                            <div class="pad">
+                              <!-- Map will be created here -->
+                              <div id="membersChartContainer" style="height: 325px;"></div>
+                            </div>
+                          </div>
+                          <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                        <!-- /.users-list -->
+                      </div>
+                      <!-- /.box-body -->
+                      <div class="box-footer text-center">
+                        <a href="javascript:void(0)" class="uppercase">View All Users</a>
+                      </div>
+                      <!-- /.box-footer -->
+                    </div>
+                    <!--/.box -->
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- /.col -->
+              
+              <!-- Right col -->
+              <div class="col-md-4">
+                <!-- USERS LIST -->
+                <div class="box box-danger">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Latest Members</h3>
+                    <div class="box-tools pull-right">
+                      <span class="label label-danger">8 New Members</span>
+                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                      </button>
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-wrench"></i></button>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Action</a></li>
+                          <li><a href="#" data-action="leaflet" data-target='bottomChartContainer'>配置图表</a></li>
+                          <li><a href="#">Something else here</a></li>
+                          <li class="divider"></li>
+                          <li><a href="#">Separated link</a></li>
+                        </ul>
+                      </div>
+                      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body no-padding">
+                    <!-- Conversations are loaded here -->
+                    <div class="row">
+                      <div class="col-md-6 col-sm-6">
+                        <div class="pad">
+                          <!-- Map will be created here -->
+                          <div id="bottomChartContainer" style="height: 325px;"></div>
+                        </div>
+                      </div>
+                      <!-- /.col -->
+                      <!-- /.users-list -->
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer text-center">
+                      <a href="javascript:void(0)" class="uppercase">View All Users</a>
+                    </div>
+                    <!-- /.box-footer -->
+                  </div>
+                  <!--/.box -->
+                  
+                  <div class="box box-default">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">Browser Usage</h3>
+                      <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                          <i class="fa fa-wrench"></i></button>
+                          <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#" data-action="leaflet" data-target='chart-responsive'>配置图表</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                          </ul>
+                        </div>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                      </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                      <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                          <div class="pad">
+                            <!-- Map will be created here -->
+                            <div id="chart-responsive" style="height: 325px;"></div>
+                          </div>
+                        </div>
+                        <!-- /.row -->
+                      </div>
+                      <!-- /.box-body -->
+                      <div class="box-footer no-padding">
+                      </div>
+                      <!-- /.footer -->
+                    </div>
+                    <!-- /.box -->
+                    
+                    
+                    
+                  </div>
+                  <!-- /.row -->
+                  </div>
+                  </div>
+                  <!-- /.Right column-->
+
+                <!-- /.content -->
+              </div>
+              </section>
+              <!-- /.content-wrapper -->
+              <footer class="main-footer">
+                <div class="pull-right hidden-xs">
+                  <b>Version</b> 2.3.3
+                </div>
+                <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
+                reserved.
+              </footer>
+              <!-- ./wrapper -->
+            </div>
+          </div>
+          <div ng-view class="wrap">
+          </div>
+            
+            <!-- jquery -->
+            <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+            <script type="text/javascript" src="bower_components/jquery-ui/ui/minified/jquery-ui.min.js"></script>
+            <script type="text/javascript" src="bower_components/jqueryui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+            <!-- bootstrap -->
+            <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+            <script type="text/javascript" src="bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js"></script>
+            <!-- d3 -->
+            <script type="text/javascript" src="bower_components/d3/d3.min.js"></script>
+            <script type="text/javascript" src="bower_components/d3-plugins/sankey/sankey.js"></script>
+            <script type="text/javascript" src="bower_components/d3-plugins/hexbin/hexbin.js"></script>
+            <!-- codemirror -->
+            <script type="text/javascript" src="bower_components/codemirror/lib/codemirror.js"></script>
+            <script type="text/javascript" src="bower_components/codemirror/addon/display/placeholder.js"></script>
+            <!-- canvastoblob -->
+            <script type="text/javascript" src="bower_components/canvas-toBlob.js/canvas-toBlob.js"></script>
+            <!-- filesaver -->
+            <script type="text/javascript" src="bower_components/FileSaver/FileSaver.js"></script>
+            <!-- zeroclipboard -->
+            <script type="text/javascript" src="bower_components/zeroclipboard/ZeroClipboard.min.js"></script>
+            <!-- PapaParser -->
+            <script type="text/javascript" src="lib/papaparse.min.js"></script>
+            <!-- r -->
+            <script type="text/javascript" src="lib/r.js"></script>
+            <!--Radar-->
+            <script type="text/javascript" src="lib/RadarChart.js"></script>
+            <!--Gis -->
+            <script type="text/javascript" src="lib/gis/leaflet-src.js"></script>
+            <script type="text/javascript" src="lib/gis/L.D3SvgOverlay.min.js"></script>
+            <script type="text/javascript" src="lib/gis/jquery.tipsy.js"></script>
+            <script type="text/javascript" src="lib/gis/latLngfix.js"></script>
+            <link href="lib/gis/leaflet.css" rel="stylesheet">
+            <link href="lib/gis/tipsy.css" rel="stylesheet">
+            <!-- charts -->
+            <script src="charts/treemap.js"></script>
+            <script src="charts/streamgraph.js"></script>
+            <script src="charts/scatterPlot.js"></script>
+            <script src="charts/packing.js"></script>
+            <script src="charts/clusterDendrogram.js"></script>
+            <script src="charts/voronoi.js"></script>
+            <script src="charts/delaunay.js"></script>
+            <script src="charts/alluvial.js"></script>
+            <script src="charts/clusterForce.js"></script>
+            <script src="charts/convexHull.js"></script>
+            <script src="charts/hexagonalBinning.js"></script>
+            <script src="charts/reingoldTilford.js"></script>
+            <script src="charts/parallelCoordinates.js"></script>
+            <script src="charts/circularDendrogram.js"></script>
+            <script src="charts/smallMultiplesArea.js"></script>
+            <script src="charts/bumpChart.js"></script>
+            <!--<script src="charts/pieChart.js"></script>-->
+            <script src="charts/labeledPieChart.js"></script>
+            <script src="charts/multiRadarChart.js"></script>
+            <script src="charts/basicBarChart.js"></script>
+            <script src="charts/singleLineChart.js"></script>
+            <script src="charts/fancyBubble.js"></script>
+            <script src="charts/asterPlotChart.js"></script>
+            <script src="charts/xuhuiGIS.js"></script>
+            <!-- angular -->
+            <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+            <script type="text/javascript" src="bower_components/angular-route/angular-route.min.js"></script>
+            <script type="text/javascript" src="bower_components/angular-animate/angular-animate.min.js"></script>
+            <script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+            <script type="text/javascript" src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
+            <script type="text/javascript" src="bower_components/angular-ui/build/angular-ui.min.js"></script>
+            <script type="text/javascript" src="bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js"></script>
+            <script src="js/app.js"></script>
+            <script src="js/services.js"></script>
+            <script src="js/dashboardControllers.js"></script>
+            <script src="js/filters.js"></script>
+            <script src="js/directives.js"></script>
+          </body>
+        </html>

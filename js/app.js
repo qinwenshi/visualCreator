@@ -18,3 +18,9 @@ angular.module('raw', [
   $routeProvider.otherwise({redirectTo: '/'});
   $locationProvider.html5Mode(true);
 }]);
+
+
+(function noConflictjQuery($){
+  var bootstrapButton = $.fn.button.noConflict();
+  $.fn.bootstrapBtn = bootstrapButton      
+})($);
