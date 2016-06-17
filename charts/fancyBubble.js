@@ -79,7 +79,7 @@
             kincaidDomainPadding: .1,
             xAxisLabel: "时间",
             yAxisLabel: yValue()[0],
-            keyCircleLabel: scaleValue()[0],
+            // keyCircleLabel: scaleValue()[0],
             noneSelectedOpacity: .3,
             selectedOpacity: 1,
             unselectedOpacity: .07,
@@ -162,9 +162,9 @@
             .scale(yScale)
             .orient('left');
 
-        var keyCircle = scaleKeyCircle()
-            .scale(wordCountScale)
-            .tickValues([3000, 30000]);
+        // var keyCircle = scaleKeyCircle()
+        //     .scale(wordCountScale)
+        //     .tickValues([3000, 30000]);
 
         svg.append('g')
             .attr('class', 'x axis')
@@ -187,15 +187,15 @@
             .style('text-anchor', 'middle')
             .text(CONFIG.yAxisLabel);
 
-        svg.append('g')
-            .attr('class', 'circle scale')
-            .attr('transform', 'translate(120, ' + (h() - margin.top - margin.bottom - CONFIG.maxBubbleRadius * 2) + ')')
-            .append('text')
-            .attr('class', 'gia-axisLabel')
-            .attr('x', 0)
-            .attr('y', -CONFIG.maxBubbleRadius * 2 - 4)
-            .style('text-anchor', 'middle')
-            .text(CONFIG.keyCircleLabel);
+        // svg.append('g')
+        //     .attr('class', 'circle scale')
+        //     .attr('transform', 'translate(120, ' + (h() - margin.top - margin.bottom - CONFIG.maxBubbleRadius * 2) + ')')
+        //     .append('text')
+        //     .attr('class', 'gia-axisLabel')
+        //     .attr('x', 0)
+        //     .attr('y', -CONFIG.maxBubbleRadius * 2 - 4)
+        //     .style('text-anchor', 'middle')
+        //     .text(CONFIG.keyCircleLabel);
 
         var popupConnectors = svg.append('g')
             .attr('id', 'popupConnectors');
@@ -213,8 +213,8 @@
             svg.select('g.y.axis')
                 .call(yAxis);
 
-            svg.select('g.circle.scale')
-                .call(keyCircle);
+            // svg.select('g.circle.scale')
+            //     .call(keyCircle);
         }
 
         /**
@@ -348,120 +348,120 @@
         renderAxis();
         render();
 
-        function scaleKeyCircle() {
-            var scale,
-                orient = "left",
-                tickPadding = 3,
-                tickExtend = 5,
-                tickArguments_ = [5],
-                tickValues = null,
-                tickFormat_
+        // function scaleKeyCircle() {
+        //     var scale,
+        //         orient = "left",
+        //         tickPadding = 3,
+        //         tickExtend = 5,
+        //         tickArguments_ = [5],
+        //         tickValues = null,
+        //         tickFormat_
 
-            function key(g) {
-                g.each(function () {
-                    var g = d3.select(this);
+        //     function key(g) {
+        //         g.each(function () {
+        //             var g = d3.select(this);
 
-                    // Ticks, or domain values for ordinal scales.
-                    var ticks = tickValues == null ? (scale.ticks ? scale.ticks.apply(scale, tickArguments_) : scale.domain()) : tickValues,
-                        tickFormat = tickFormat_ == null ? (scale.tickFormat ? scale.tickFormat.apply(scale, tickArguments_) : String) : tickFormat_;
+        //             // Ticks, or domain values for ordinal scales.
+        //             var ticks = tickValues == null ? (scale.ticks ? scale.ticks.apply(scale, tickArguments_) : scale.domain()) : tickValues,
+        //                 tickFormat = tickFormat_ == null ? (scale.tickFormat ? scale.tickFormat.apply(scale, tickArguments_) : String) : tickFormat_;
 
-                    ticks = ticks.slice().reverse()
+        //             ticks = ticks.slice().reverse()
 
-                    ticks.forEach(function (tick) {
-                        var gg = g.append('g')
-                            .attr('class', 'circleKey')
-                            .attr('transform', 'translate(0,' + -scale(tick) + ')')
+        //             ticks.forEach(function (tick) {
+        //                 var gg = g.append('g')
+        //                     .attr('class', 'circleKey')
+        //                     .attr('transform', 'translate(0,' + -scale(tick) + ')')
 
-                        gg.append('circle')
-                            .attr('cx', 0)
-                            .attr('cy', 0)
-                            .attr('r', scale(tick))
+        //                 gg.append('circle')
+        //                     .attr('cx', 0)
+        //                     .attr('cy', 0)
+        //                     .attr('r', scale(tick))
 
-                        var x1 = scale(tick),
-                            x2 = tickExtend + scale(ticks[0]),
-                            tx = x2 + tickPadding,
-                            textAnchor = "start";
+        //                 var x1 = scale(tick),
+        //                     x2 = tickExtend + scale(ticks[0]),
+        //                     tx = x2 + tickPadding,
+        //                     textAnchor = "start";
 
-                        if ("left" == orient) {
-                            x1 = -x1;
-                            x2 = -x2;
-                            tx = -tx;
-                            textAnchor = "end";
-                        }
+        //                 if ("left" == orient) {
+        //                     x1 = -x1;
+        //                     x2 = -x2;
+        //                     tx = -tx;
+        //                     textAnchor = "end";
+        //                 }
 
-                        gg.append('line')
-                            .attr('x1', x1)
-                            .attr('x2', x2)
-                            .attr('y1', 0)
-                            .attr('y2', 0)
-                            .attr('stroke', '#000')
-                            .text(tick);
+        //                 gg.append('line')
+        //                     .attr('x1', x1)
+        //                     .attr('x2', x2)
+        //                     .attr('y1', 0)
+        //                     .attr('y2', 0)
+        //                     .attr('stroke', '#000')
+        //                     .text(tick);
 
-                        gg.append('text')
-                            .attr('transform', 'translate(' + tx + ', 0)')
-                            .attr('dy', '.35em')
-                            .style('text-anchor', textAnchor)
-                            .text(tickFormat(tick))
-                    })
+        //                 gg.append('text')
+        //                     .attr('transform', 'translate(' + tx + ', 0)')
+        //                     .attr('dy', '.35em')
+        //                     .style('text-anchor', textAnchor)
+        //                     .text(tickFormat(tick))
+        //             })
 
-                })
-            }
+        //         })
+        //     }
 
-            key.scale = function (value) {
-                if (!arguments.length) return scale;
-                scale = value;
-                return key;
-            };
+        //     key.scale = function (value) {
+        //         if (!arguments.length) return scale;
+        //         scale = value;
+        //         return key;
+        //     };
 
-            key.orient = function (value) {
-                if (!arguments.length) return orient;
-                orient = value;
-                return key;
-            };
+        //     key.orient = function (value) {
+        //         if (!arguments.length) return orient;
+        //         orient = value;
+        //         return key;
+        //     };
 
-            key.ticks = function () {
-                if (!arguments.length) return tickArguments_;
-                tickArguments_ = arguments;
-                return key;
-            };
+        //     key.ticks = function () {
+        //         if (!arguments.length) return tickArguments_;
+        //         tickArguments_ = arguments;
+        //         return key;
+        //     };
 
-            key.tickFormat = function (x) {
-                if (!arguments.length) return tickFormat_;
-                tickFormat_ = x;
-                return key;
-            };
+        //     key.tickFormat = function (x) {
+        //         if (!arguments.length) return tickFormat_;
+        //         tickFormat_ = x;
+        //         return key;
+        //     };
 
-            key.tickValues = function (x) {
-                if (!arguments.length) return tickValues;
-                tickValues = x;
-                return key;
-            };
+        //     key.tickValues = function (x) {
+        //         if (!arguments.length) return tickValues;
+        //         tickValues = x;
+        //         return key;
+        //     };
 
-            key.tickPadding = function (x) {
-                if (!arguments.length) return tickPadding;
-                tickPadding = +x;
-                return key;
-            };
+        //     key.tickPadding = function (x) {
+        //         if (!arguments.length) return tickPadding;
+        //         tickPadding = +x;
+        //         return key;
+        //     };
 
-            key.tickExtend = function (x) {
-                if (!arguments.length) return tickExtend;
-                tickExtend = +x;
-                return key;
-            };
+        //     key.tickExtend = function (x) {
+        //         if (!arguments.length) return tickExtend;
+        //         tickExtend = +x;
+        //         return key;
+        //     };
 
-            key.width = function (value) {
-                if (!arguments.length) return width;
-                width = value;
-                return key;
-            };
+        //     key.width = function (value) {
+        //         if (!arguments.length) return width;
+        //         width = value;
+        //         return key;
+        //     };
 
-            key.height = function (value) {
-                if (!arguments.length) return height;
-                height = value;
-                return key;
-            };
+        //     key.height = function (value) {
+        //         if (!arguments.length) return height;
+        //         height = value;
+        //         return key;
+        //     };
 
-            return key;
-        }
+        //     return key;
+        // }
     });
 })();
