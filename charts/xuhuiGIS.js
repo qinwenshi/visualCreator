@@ -78,13 +78,18 @@
             .element(mapElement)
             .width(w)
             .height(h);
+            
+            var map = $(mapElement).data('map');
+            if(!!map) 
+                map.remove();
 
-            if(window.map != undefined) 
-                map.remove(); 
-            window.map = map = L.map(mapElement, {
+            // if(typeof map != 'undefined' && map._container.id == mapElement.id) 
+            //     map.remove(); 
+            var map = L.map(mapElement, {
                 center: [31.18222689072537, 121.43519994932613],
                 zoom: 12
             });
+            $(mapElement).data('map', map);
             var tiles = L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {
                 attribution: 'x-Lab GIS 数据可视化',
                 subdomains: '1234'

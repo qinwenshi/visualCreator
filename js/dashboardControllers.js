@@ -13,11 +13,11 @@ angular.module('raw.controllers', [])
             {title: 'Cocktails (correlations)', url: 'data/correlations.csv'},
             {title: "Personal Accounting(Pie)", url: 'data/multivariate_tt.csv'},
             {title: "Multi Radar", url: 'data/multiRadar.csv'},
-            {title: "区县柱图", url: 'data/basicBarChartData.csv'},
+            {title: "Basic BarChart", url: 'data/basicBarChartData.csv'},
             {title: "Single Line Chart", url: 'data/singleLineChartData.csv'},
             {title: "GIS", url: 'data/XuhuiStreetData.csv'},
-            {title: "区县气泡图", url: 'data/fancyBubble.csv'},
-            {title: "区县玫瑰图", url: 'data/asterData.csv'}
+            {title: "Fancy Bubble Chart", url: 'data/fancyBubble.csv'},
+            {title: "Aster Plot Chart", url: 'data/asterData.csv'}
         ];
 
         $scope.$watch('sample', function (sample) {
@@ -165,5 +165,30 @@ angular.module('raw.controllers', [])
 
         $(document).ready(refreshScroll);
 
-        
+        $(document).ready(prepareDashboard);
+
+        function prepareDashboard(){
+
+            var dialog = $( ".wrap" ).zIndex(9999)
+            .dialog({
+                  title: "设置图表",
+                  autoOpen: false,
+                  height: 900,
+                  width: 1250,
+                  modal: true,
+                  buttons: {
+                    Cancel: function() {
+                      dialog.dialog( "close" );
+                    }
+                  },
+                  close: function() {
+                    
+                  }
+            });
+
+            $("[data-action]").on('click', function () {
+                $scope.target = $(this).data('target');
+                dialog.dialog( "open" );
+            });
+        }
     })
