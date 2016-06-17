@@ -48,7 +48,7 @@
         .defaultValue(600)
         .fitToWidth(true);
 
-    var formatDate = d3.time.format("%Y%m%d");
+    var formatDate = d3.time.format("%Y%m");
 
     model.map(function (data) {
         if (!xValue() || !yValue() || !scaleValue() || !nameValue()) return;
@@ -72,12 +72,12 @@
     });
 
     chart.draw(function (selection, data) {
-
+        var rootNode = d3.select("#chart");
         var CONFIG = {
             maxBubbleRadius: 20,
-            dateDomainPadding: 5, // years
+            dateDomainPadding: 1, // years
             kincaidDomainPadding: .1,
-            xAxisLabel: xValue()[0],
+            xAxisLabel: "时间",
             yAxisLabel: yValue()[0],
             keyCircleLabel: scaleValue()[0],
             noneSelectedOpacity: .3,
@@ -90,17 +90,13 @@
         var selectedSpeech, points;
         var speeches = [];
 
-
         var margin = {top: 10, right: 10, bottom: 50, left: 50};
 
         var width = w() - margin.left - margin.right,
             height = h() - margin.top - margin.bottom;
-
-        var rootNode = d3.select("#chart");
-
         var svg = selection
-            .attr('width', width + margin.left + margin.right)
-            .attr('height', height + margin.top + margin.bottom)
+            .attr('width', w())
+            .attr('height', h())
             .append("g")
             .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
@@ -123,8 +119,8 @@
         var background = svg.append('rect')
             .attr('x', 0)
             .attr('y', 0)
-            .attr('width', width)
-            .attr('height', height)
+            .attr('width', w() - margin.left - margin.right)
+            .attr('height', h() - margin.top - margin.bottom)
             .style('fill', '#fff')
             .on('mouseout', function (e) {
                 selectedSpeech = null;
@@ -137,22 +133,21 @@
         var tmp = document.getElementById("gia-sotu-popup");
 
         /**
-         * 弹出的窗口
+         * recreate the popup window div everytime, and the popup div must append behind the svg
          */
         var elPopup;
-        if (tmp === undefined || tmp === null) {
-            elPopup = rootNode.append('div')
-                .attr('id', 'gia-sotu-popup')
-                .style('display', 'none');
-        } else {
-            elPopup = rootNode.select("#gia-sotu-popup");
+        if (tmp != undefined && tmp != null) {
+            document.getElementById("chart").removeChild(tmp);
         }
 
+        elPopup = rootNode.append('div')
+                .attr('id', 'gia-sotu-popup')
+                .style('display', 'none');
         var xScale = d3.time.scale()
-            .range([0, width]);
+            .range([0, w() - margin.left - margin.right]);
 
         var yScale = d3.scale.linear()
-            .range([height, 0]);
+            .range([h() - margin.top - margin.bottom, 0]);
 
         var colors = d3.scale.category10();
 
@@ -173,9 +168,9 @@
 
         svg.append('g')
             .attr('class', 'x axis')
-            .attr('transform', 'translate(0, ' + height + ')')
+            .attr('transform', 'translate(0, ' + (h() - margin.top - margin.bottom) + ')')
             .append('text')
-            .attr('transform', 'translate(' + (width / 2) + ', 0)')
+            .attr('transform', 'translate(' + (w() - margin.left - margin.right / 2) + ', 0)')
             .attr('class', 'gia-axisLabel')
             .attr('x', 0)
             .attr('y', 40)
@@ -186,7 +181,7 @@
             .attr('class', 'y axis')
             .append('text')
             .attr('class', 'gia-axisLabel')
-            .attr('transform', 'rotate(90) translate(' + (height / 2) + ' 0)')
+            .attr('transform', 'rotate(90) translate(' + (h() - margin.top - margin.bottom / 2) + ' 0)')
             .attr('x', 0)
             .attr('y', 40)
             .style('text-anchor', 'middle')
@@ -194,7 +189,7 @@
 
         svg.append('g')
             .attr('class', 'circle scale')
-            .attr('transform', 'translate(120, ' + (height - CONFIG.maxBubbleRadius * 2) + ')')
+            .attr('transform', 'translate(120, ' + (h() - margin.top - margin.bottom - CONFIG.maxBubbleRadius * 2) + ')')
             .append('text')
             .attr('class', 'gia-axisLabel')
             .attr('x', 0)
@@ -298,7 +293,7 @@
                     })
                     .attr('y1', top + 35)
                     .attr('y2', top + 35);
-
+ 
                 var leftPadding = Math.round(wordCountScale(selectedSpeech.counts)) + 26;
 
                 var left = cx + (flip ? 40 : -40) + margin.left;
@@ -310,7 +305,7 @@
                     // left -= Math.round(elPopup.style('width').split("px")[0]);
                     // left -= (margin.left + leftPadding);
                 }
-
+                    
                 elPopup
                     .html('<h4>' + selectedSpeech.name + '</h4><h5>' + scaleValue()[0] + ':' + selectedSpeech.counts + '</h5>')
                     .style('top', top + 'px')

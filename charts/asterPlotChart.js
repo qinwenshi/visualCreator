@@ -7,15 +7,15 @@
     var label = model.dimension()
         .title("名称")
         .multiple(false)
-        .types(String,Number)
+        .types(String, Number)
         .required(1);
 
     /**
      * 对应于角度
      * @type {*|{require, link}}
      */
-    var weight = model.dimension()
-        .title("占比")
+    var angle = model.dimension()
+        .title("角度")
         .multiple(false)
         .types(Number)
         .required(1);
@@ -24,8 +24,8 @@
      * 对应于扇形的半径
      * @type {*|{require, link}}
      */
-    var value = model.dimension()
-        .title("值")
+    var radius = model.dimension()
+        .title("半径")
         .multiple(false)
         .types(Number)
         .required(1);
@@ -56,7 +56,7 @@
      */
     var maxValue = Number.MIN_SAFE_INTEGER;
     model.map(function (data) {
-        if (!label() || !value() || !weight()) {
+        if (!label() || !radius() || !angle()) {
             return;
         }
         return data.map(function (d) {
@@ -64,17 +64,17 @@
             label().forEach(function (l) {
                 obj.label = d[l];
             });
-            weight().forEach(function (l) {
-                obj.weight = Math.round(d[l]);
+            angle().forEach(function (l) {
+                obj.angle = Math.round(d[l]);
                 obj.width = Math.round(d[l]);
             });
-            value().forEach(function (l) {
-                obj.value = Math.round(d[l]);
+            radius().forEach(function (l) {
+                obj.radius = Math.round(d[l]);
                 /**
                  * 计算最大值
                  */
-                if (obj.value > maxValue) {
-                    maxValue = obj.value;
+                if (obj.radius > maxValue) {
+                    maxValue = obj.radius;
                 }
             });
             return obj;
@@ -84,8 +84,8 @@
     chart.draw(function (selection, data) {
         var width = w(),
             height = h(),
-            radius = Math.min(width, height) / 2,
-            innerRadius = 0.3 * radius;
+            cRadius = Math.min(width, height) / 2,
+            innerRadius = 0.3 * cRadius;
 
         var pie = d3.layout.pie()
             .sort(null)
@@ -97,18 +97,18 @@
             .attr('class', 'd3-tip')
             .offset([0, 0])
             .html(function (d) {
-                return d.data.label + ": <span style='color:orangered'>" + d.data.value + "</span>(" + value()[0] + ")";
+                return d.data.label + ":<br>" + radius()[0] + ": <span style='color:orangered'>" + d.data.radius + "</span>" + "<br>" + angle()[0] + ": <span style='color:orangered'>" + d.data.angle + "</span>";
             });
 
         var arc = d3.svg.arc()
             .innerRadius(innerRadius)
             .outerRadius(function (d) {
-                return (radius - innerRadius) * (1.0 * d.data.value / maxValue) + innerRadius;
+                return (cRadius - innerRadius) * (1.0 * d.data.radius / maxValue) + innerRadius;
             });
 
         var outlineArc = d3.svg.arc()
             .innerRadius(innerRadius)
-            .outerRadius(radius);
+            .outerRadius(cRadius);
 
         var svg = selection
             .attr("width", width)
@@ -140,12 +140,13 @@
             .attr("d", outlineArc);
 
         // calculate the weighted mean score
+        //角度平均值
         var score =
             data.reduce(function (a, b) {
-                return a + Math.round(b.value * b.weight);
+                return a + Math.round(b.radius * b.angle);
             }, 0) /
             data.reduce(function (a, b) {
-                return a + Math.round(b.weight);
+                return a + Math.round(b.angle);
             }, 0);
 
         svg.append("svg:text")
