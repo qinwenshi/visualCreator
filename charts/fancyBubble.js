@@ -72,7 +72,9 @@
     });
 
     chart.draw(function (selection, data) {
-        var rootNode = d3.select("#chart");
+    
+        var parentContainerId = selection.node().parentNode.id;
+
         var CONFIG = {
             maxBubbleRadius: 20,
             dateDomainPadding: 1, // years
@@ -137,8 +139,10 @@
          */
         var elPopup;
         if (tmp != undefined && tmp != null) {
-            document.getElementById("chart").removeChild(tmp);
+            document.getElementById(parentContainerId).removeChild(tmp);
         }
+
+        var rootNode = d3.select("#"+parentContainerId);
 
         elPopup = rootNode.append('div')
                 .attr('id', 'gia-sotu-popup')
