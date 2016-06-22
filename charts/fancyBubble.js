@@ -138,8 +138,9 @@
          * recreate the popup window div everytime, and the popup div must append behind the svg
          */
         var elPopup;
-        if (tmp != undefined && tmp != null) {
-            document.getElementById(parentContainerId).removeChild(tmp);
+        //if (tmp != undefined && tmp != null) {
+        if(angular.element('#'+parentContainerId).find('#gia-sotu-popup').length>0){
+            angular.element('#'+parentContainerId).find('#gia-sotu-popup').remove();
         }
 
         var rootNode = d3.select("#"+parentContainerId);
