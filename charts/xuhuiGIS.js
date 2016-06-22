@@ -132,7 +132,7 @@
 
             });
 
-            d3.json("/lib/gis/XuhuiStreetGeo.json", function(data) {
+            d3.json("lib/gis/XuhuiStreetGeo.json", function(data) {
                 countries = data.features;
 
                 for (var i in countries) {
