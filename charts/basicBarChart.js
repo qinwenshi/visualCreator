@@ -25,13 +25,13 @@
 
     var width = chart.number()
         .title("宽度")
-        .defaultValue(1000)
-        .fitToWidth(true);
+        .defaultValue(350)
+        .fitToWidth(false);
 
     var height = chart.number()
         .title("高度")
-        .defaultValue(600)
-        .fitToWidth(true);
+        .defaultValue(290)
+        .fitToWidth(false);
 
     var colors = chart.color()
         .title("颜色分布");
@@ -39,7 +39,7 @@
     model.map(function (data) {
         if (!valueList()) return;
         return data.map(function (d) {
-            var obj = {'label': labels(d)};
+            var obj = {'label': labels(d),'unit':valueList()[0]};
             valueList().forEach(function (l) {
                 obj['barValue'] = d[l];
             });
@@ -75,7 +75,7 @@
             .attr('class', 'd3-tip')
             .offset([0, 0])
             .html(function (d) {
-                return d.label + ": <span style='color:orangered'>" + d.barValue + "</span>(" + valueList()[0] + ")";
+                return d.label + ": <span style='color:orangered'>" + d.barValue + "</span>(" + d.unit + ")";
             });
         svg.call(tip);
 

@@ -149,10 +149,10 @@ circle.speech {
 #gia-sotu-popup {
     pointer-events: none;
     position: absolute;
-    width: 200px;
-    padding: 10px;
-    border: 2px solid #ff8a80;
-    background: rgba(255, 255, 255, 0.7);
+    width: 110px;
+    padding: 5px;
+    border: 1px solid #7a777d;
+    background: rgba(255, 255, 255, 1);
 }
 
 #gia-sotu-popup h3 {

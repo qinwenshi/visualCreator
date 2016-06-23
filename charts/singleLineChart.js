@@ -26,13 +26,13 @@
 
     var width = chart.number()
         .title("宽度")
-        .defaultValue(1000)
-        .fitToWidth(true);
+        .defaultValue(400)
+        .fitToWidth(false);
 
     var height = chart.number()
         .title("高度")
-        .defaultValue(600)
-        .fitToWidth(true);
+        .defaultValue(350)
+        .fitToWidth(false);
 
     var formatDate = d3.time.format("%Y%m%d");
 

@@ -39,13 +39,13 @@
 
     var w = chart.number()
         .title("宽度")
-        .defaultValue(1000)
-        .fitToWidth(true);
+        .defaultValue(400)
+        .fitToWidth(false);
 
     var h = chart.number()
         .title("高度")
-        .defaultValue(600)
-        .fitToWidth(true);
+        .defaultValue(400)
+        .fitToWidth(false);
 
     var colors = chart.color()
         .title("颜色");
@@ -67,9 +67,11 @@
             angle().forEach(function (l) {
                 obj.angle = Math.round(d[l]);
                 obj.width = Math.round(d[l]);
+                obj.angleName = l;
             });
             radius().forEach(function (l) {
                 obj.radius = Math.round(d[l]);
+                obj.radiusName = l;
                 /**
                  * 计算最大值
                  */
@@ -97,7 +99,7 @@
             .attr('class', 'd3-tip')
             .offset([0, 0])
             .html(function (d) {
-                return d.data.label + ":<br>" + radius()[0] + ": <span style='color:orangered'>" + d.data.radius + "</span>" + "<br>" + angle()[0] + ": <span style='color:orangered'>" + d.data.angle + "</span>";
+                return d.data.label + ":<br>" + d.data.radiusName + ": <span style='color:orangered'>" + d.data.radius + "</span>" + "<br>" + d.data.angleName + ": <span style='color:orangered'>" + d.data.angle + "</span>";
             });
 
         var arc = d3.svg.arc()

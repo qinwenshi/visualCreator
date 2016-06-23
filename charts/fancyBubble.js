@@ -40,13 +40,13 @@
 
     var w = chart.number()
         .title("宽度")
-        .defaultValue(1000)
-        .fitToWidth(true);
+        .defaultValue(400)
+        .fitToWidth(false);
 
     var h = chart.number()
         .title("高度")
-        .defaultValue(600)
-        .fitToWidth(true);
+        .defaultValue(350)
+        .fitToWidth(false);
 
     var formatDate = d3.time.format("%Y%m");
 
@@ -63,6 +63,7 @@
             });
             scaleValue().forEach(function (l) {
                 obj['counts'] = d[l];
+                obj['scaleName'] = l;
             });
             nameValue().forEach(function (l) {
                 obj['name'] = d[l];
@@ -72,8 +73,13 @@
     });
 
     chart.draw(function (selection, data) {
-    
+
         var parentContainerId = selection.node().parentNode.id;
+
+        var rootNode = d3.select("#" + parentContainerId);
+        rootNode.attr("width", w())
+            .attr("height", h())
+            .style("position", "relative");
 
         var CONFIG = {
             maxBubbleRadius: 20,
@@ -138,15 +144,14 @@
          * recreate the popup window div everytime, and the popup div must append behind the svg
          */
         var elPopup;
-        if (tmp != undefined && tmp != null) {
-            document.getElementById(parentContainerId).removeChild(tmp);
+        //if (tmp != undefined && tmp != null) {
+        if (angular.element('#' + parentContainerId).find('#gia-sotu-popup').length > 0) {
+            angular.element('#' + parentContainerId).find('#gia-sotu-popup').remove();
         }
 
-        var rootNode = d3.select("#"+parentContainerId);
-
         elPopup = rootNode.append('div')
-                .attr('id', 'gia-sotu-popup')
-                .style('display', 'none');
+            .attr('id', 'gia-sotu-popup')
+            .style('display', 'none');
         var xScale = d3.time.scale()
             .range([0, w() - margin.left - margin.right]);
 
@@ -287,7 +292,7 @@
                     .attr('x1', cx)
                     .attr('x2', cx)
                     .attr('y1', cy)
-                    .attr('y2', top + 35);
+                    .attr('y2', top);
 
                 popupConnectors
                     .select('.connector2')
@@ -295,24 +300,25 @@
                     .attr('x2', function () {
                         return cx + (flip ? 40 : -40)
                     })
-                    .attr('y1', top + 35)
-                    .attr('y2', top + 35);
- 
+                    .attr('y1', top)
+                    .attr('y2', top);
+
                 var leftPadding = Math.round(wordCountScale(selectedSpeech.counts)) + 26;
 
-                var left = cx + (flip ? 40 : -40) + margin.left;
+                var left = cx;
 
                 if (flip) {
                     left += leftPadding;
-                    // left += Math.round(elPopup.style('width').split("px")[0]) / 2;
                 } else {
-                    // left -= Math.round(elPopup.style('width').split("px")[0]);
-                    // left -= (margin.left + leftPadding);
+                    left -= parseInt(elPopup.style('width'));
+                    left -= leftPadding - 40;
                 }
-                    
+                left += margin.left;
+
                 elPopup
-                    .html('<h4>' + selectedSpeech.name + '</h4><h5>' + scaleValue()[0] + ':' + selectedSpeech.counts + '</h5>')
-                    .style('top', top + 'px')
+                    .html('<h4>' + selectedSpeech.name + '</h4><h5>' + selectedSpeech.scaleName + ':' + selectedSpeech.counts + '</h5>')
+                    .style('position', 'absolute')
+                    .style('top', (top - 40) + 'px')
                     .style('left', left + 'px')
                     .style('display', 'block');
             } else {

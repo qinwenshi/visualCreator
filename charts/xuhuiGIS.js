@@ -90,10 +90,20 @@
                 zoom: 12
             });
             $(mapElement).data('map', map);
-            var tiles = L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {
+            /*var tiles = L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {
                 attribution: 'x-Lab GIS 数据可视化',
                 subdomains: '1234'
-            });
+            });*/
+            ACCESS_TOKEN = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw';
+            MB_ATTR = 'created by x-Lab';
+            MB_URL = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + ACCESS_TOKEN;
+            OSM_URL = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+            OSM_ATTRIB = '&copy; <a href="http://x-lab.wondersgroup.com">X-Data</a>';
+
+            var tiles = L.tileLayer(MB_URL, {attribution: MB_ATTR, id: 'mapbox.streets'});
+            
+            
+            //access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw
             tiles.addTo(map);
 
 
@@ -132,7 +142,7 @@
 
             });
 
-            d3.json("/lib/gis/XuhuiStreetGeo.json", function(data) {
+            d3.json("lib/gis/XuhuiStreetGeo.json", function(data) {
                 countries = data.features;
 
                 for (var i in countries) {
