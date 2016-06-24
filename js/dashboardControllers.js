@@ -13,11 +13,11 @@ angular.module('raw.controllers', [])
             {title: 'Cocktails (correlations)', url: 'data/correlations.csv'},
             {title: "Personal Accounting(Pie)", url: 'data/multivariate_tt.csv'},
             {title: "Multi Radar", url: 'data/multiRadar.csv'},
-            {title: "Basic BarChart", url: 'data/basicBarChartData.csv'},
+            {title: "区县柱图", url: 'data/basicBarChartData.csv'},
             {title: "Single Line Chart", url: 'data/singleLineChartData.csv'},
             {title: "GIS", url: 'data/XuhuiStreetData.csv'},
-            {title: "Fancy Bubble Chart", url: 'data/fancyBubble.csv'},
-            {title: "Aster Plot Chart", url: 'data/asterData.csv'}
+            {title: "区县气泡图", url: 'data/fancyBubble.csv'},
+            {title: "区县玫瑰图", url: 'data/asterData.csv'}
         ];
 
         $scope.$watch('sample', function (sample) {
