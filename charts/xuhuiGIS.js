@@ -81,11 +81,11 @@
             .height(h);
             
             var map = $(mapElement).data('map');
-            if(!!map) 
+            if(!!map)
                 map.remove();
 
             // if(typeof map != 'undefined' && map._container.id == mapElement.id) 
-            //     map.remove(); 
+            //     map.remove();
             var map = L.map(mapElement, {
                 center: [31.18222689072537, 121.43519994932613],
                 zoom: 12
