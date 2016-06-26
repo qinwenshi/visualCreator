@@ -41,12 +41,13 @@
 
         var width = chart.number()
             .title("宽度")
-            .defaultValue(1000)
-            .fitToWidth(true)
+            .defaultValue(850)
+            .fitToWidth(false)
 
         var height = chart.number()
             .title("高度")
-            .defaultValue(500)
+            .defaultValue(450)
+            .fitToWidth(false)
 
         var colors = chart.color()
             .title("颜色分布")

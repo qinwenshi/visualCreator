@@ -169,7 +169,7 @@ angular.module('raw.controllers', [])
 
         function prepareDashboard(){
 
-            var dialog = $( ".wrap" ).zIndex(9999)
+           /* var dialog = $( ".wrap" ).zIndex(9999)
             .dialog({
                   title: "设置图表",
                   autoOpen: false,
@@ -184,11 +184,12 @@ angular.module('raw.controllers', [])
                   close: function() {
                     
                   }
-            });
+            });*/
 
             $("[data-action]").on('click', function () {
                 $scope.target = $(this).data('target');
-                dialog.dialog( "open" );
+                // dialog.dialog( "open" );
+                $('#myModal').modal('show');
             });
         }
     })
