@@ -40,7 +40,7 @@
 
     var w = chart.number()
         .title("宽度")
-        .defaultValue(350)
+        .defaultValue(400)
         .fitToWidth(false);
 
     var h = chart.number()
