@@ -24,12 +24,12 @@
 
     var width = chart.number()
         .title("宽度")
-        .defaultValue(300)
+        .defaultValue(getDesireWidth(300))
         .fitToWidth(false);
 
     var height = chart.number()
         .title("高度")
-        .defaultValue(370)
+        .defaultValue(getDesireHeight(330))
         .fitToWidth(false);
     
     var defaultLevelInterval = 5;

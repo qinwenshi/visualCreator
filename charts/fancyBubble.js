@@ -40,12 +40,12 @@
 
     var w = chart.number()
         .title("宽度")
-        .defaultValue(400)
+        .defaultValue(getDesireWidth(400))
         .fitToWidth(false);
 
     var h = chart.number()
         .title("高度")
-        .defaultValue(330)
+        .defaultValue(getDesireHeight(330))
         .fitToWidth(false);
 
     var formatDate = d3.time.format("%Y%m");

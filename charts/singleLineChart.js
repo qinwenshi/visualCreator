@@ -26,12 +26,12 @@
 
     var width = chart.number()
         .title("宽度")
-        .defaultValue(400)
+        .defaultValue(getDesireWidth(400))
         .fitToWidth(false);
 
     var height = chart.number()
         .title("高度")
-        .defaultValue(330)
+        .defaultValue(getDesireHeight(330))
         .fitToWidth(false);
 
     var formatDate = d3.time.format("%Y%m%d");
@@ -48,7 +48,7 @@
     });
 
     chart.draw(function (selection, data) {
-        var margin = {top: 20, right: 20, bottom: 30, left: 50},
+        var margin = {top: 10, right: 20, bottom: 30, left: 50},
             w = width() - margin.left - margin.right,
             h = height() - margin.top - margin.bottom;
 

@@ -33,6 +33,7 @@
       <link rel="stylesheet" href="css/aster.css"/>
       <link rel="stylesheet" href="css/singleline.css"/>
       <link rel="stylesheet" href="css/basicbar.css"/>
+      <link rel="stylesheet" href="css/dashboard.css"/>
       <link rel="icon" href="favicon.ico?v=2" type="image/x-icon">
       <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
       <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -101,7 +102,7 @@
                       <div class="col-md-12 col-sm-12">
                         <div class="pad">
                           <!-- Map will be created here -->
-                          <div id="world-map-markers" style="height: 325px;"></div>
+                          <div id="world-map-markers" class="dashboard-content" style="height: 283px;"></div>
                         </div>
                       </div>
                       <!-- /.col -->
@@ -145,7 +146,7 @@
                           <div class="col-md-6 col-sm-6">
                             <div class="pad">
                               <!-- Map will be created here -->
-                              <div id="chartContainer" style="height: 325px;"></div>
+                              <div id="chartContainer" class="dashboard-content" style="height: 283px;"></div>
                             </div>
                           </div>
                           <!-- /.col -->
@@ -193,7 +194,7 @@
                           <div class="col-md-6 col-sm-6">
                             <div class="pad">
                               <!-- Map will be created here -->
-                              <div id="membersChartContainer" style="height: 325px;"></div>
+                              <div id="membersChartContainer" class="dashboard-content" style="height: 283px;"></div>
                             </div>
                           </div>
                           <!-- /.col -->
@@ -247,7 +248,7 @@
                       <div class="col-md-6 col-sm-6">
                         <div class="pad">
                           <!-- Map will be created here -->
-                          <div id="bottomChartContainer" style="height: 325px;">
+                          <div id="bottomChartContainer" class="dashboard-content" style="height: 283px;">
 
                           </div>
                         </div>
@@ -292,7 +293,7 @@
                         <div class="col-md-6 col-sm-6">
                           <div class="pad">
                             <!-- Map will be created here -->
-                            <div id="chart-responsive" style="height: 325px;"></div>
+                            <div id="chart-responsive" class="dashboard-content" style="height: 283px;"></div>
                           </div>
                         </div>
                         <!-- /.row -->
@@ -370,7 +371,9 @@
             <script type="text/javascript" src="lib/papaparse.min.js"></script>
             <!-- r -->
             <script type="text/javascript" src="lib/r.js"></script>
-            <!--Radar-->
+            <script type="text/javascript" src="lib/screenUtil.js"></script>
+
+      <!--Radar-->
             <script type="text/javascript" src="lib/RadarChart.js"></script>
             <script type="text/javascript" src="lib/d3.tip.v0.6.3.js"></script>
             <!--Gis -->

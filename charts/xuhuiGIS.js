@@ -41,12 +41,12 @@
 
         var width = chart.number()
             .title("宽度")
-            .defaultValue(960)
+            .defaultValue(getDesireWidth(850))
             .fitToWidth(false)
 
         var height = chart.number()
             .title("高度")
-            .defaultValue(425)
+            .defaultValue(getDesireHeight(330))
             .fitToWidth(false)
 
         var colors = chart.color()
@@ -55,9 +55,11 @@
 
         chart.draw(function(selection, data) {
 
+            //- m[1] - m[3]
+            //- m[0] - m[2]
             var m = [50, 50, 50, 50],
-                w = +width() - m[1] - m[3],
-                h = +height() - m[0] - m[2];
+                w = +width() ,
+                h = +height();
             
             var streetData = {  };
             
