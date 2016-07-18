@@ -131,7 +131,7 @@
             .attr('y', 0)
             .attr('width', w() - margin.left - margin.right)
             .attr('height', h() - margin.top - margin.bottom)
-            .style('fill', '#fff')
+            .style('fill', 'rgba(255, 255, 255, 0.07)')
             .on('mouseout', function (e) {
                 selectedSpeech = null;
                 render();
