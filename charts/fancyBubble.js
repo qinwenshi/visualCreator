@@ -56,13 +56,15 @@
             var obj = {};
 
             xValue().forEach(function (l) {
+                if(d[l].length==8)
+                    formatDate = d3.time.format("%Y%m%d");                    
                 obj['date'] = formatDate.parse(d[l]);
             });
             yValue().forEach(function (l) {
-                obj['rate'] = d[l];
+                obj['rate'] = +d[l];
             });
             scaleValue().forEach(function (l) {
-                obj['counts'] = d[l];
+                obj['counts'] = +d[l];
                 obj['scaleName'] = l;
             });
             nameValue().forEach(function (l) {
@@ -339,14 +341,22 @@
         var extentY = d3.extent(data, function (d) {
             return d.rate
         });
+
+        /*var extentY=[d3.min(data, function(d) { return d.rate; }), 
+                     d3.max(data, function(d) { return d.rate; })];*/
         var maxWordCount = d3.max(data, function (d) {
             return d.counts
         });
 
         // // pad the domain of the dates, is there a better way to do this?
-        var startDate = new Date(extentX[0].getTime()).setFullYear(extentX[0].getFullYear() - CONFIG.dateDomainPadding);
-        var endDate = new Date(extentX[1].getTime()).setFullYear(extentX[1].getFullYear() + CONFIG.dateDomainPadding);
-
+        if(parseInt((extentX[1] - extentX[0]) / (1000 * 60 * 60 * 24)) < 30){
+            var startDate = extentX[0];
+            var endDate = extentX[1];
+        }
+        else{
+            var startDate = new Date(extentX[0].getTime()).setFullYear(extentX[0].getFullYear() - CONFIG.dateDomainPadding);
+            var endDate = new Date(extentX[1].getTime()).setFullYear(extentX[1].getFullYear() + CONFIG.dateDomainPadding);
+        }
         // // pad the domain of the kincaid, is there a better way to do this?
         extentY[0] *= (1 - CONFIG.kincaidDomainPadding);
         extentY[1] *= (1 + CONFIG.kincaidDomainPadding);
